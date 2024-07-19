@@ -1,0 +1,11 @@
+webimage_extra_packages:
+  - libasound2
+  - libgbm-dev
+  - libgtk-3-0
+  - libgtk2.0-0
+  - libnotify-dev
+  - libnss3
+  - libxss1
+  - libxtst6
+  - xauth
+  - xvfb
