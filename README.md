@@ -18,17 +18,14 @@ Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 The installation process is not yet in its final form--it takes more steps than it will in the end. Specifically, it will not ultimately be necessary to clone the add-on repo or manually run the `npm` commands. In the meantime...
 
 ```shell
-# Clone the add-on into a convenient directory.
-git clone git@github.com:TravisCarden/ddev-drupal-xb-dev.git ~/Projects/ddev-drupal-xb-dev
-
 # Create a new directory for your dev site:
 mkdir ~/Sites/xb-dev && cd ~/Sites/xb-dev
 
 # Configure the new environment.
 ddev config --project-type=drupal --php-version=8.3 --docroot=web
 
-# Get the add-on from the local clone.
-ddev get ~/Projects/ddev-drupal-xb-dev
+# Get the add-on.
+ddev get TravisCarden/ddev-drupal-xb-dev
 
 # Initialize the environment.
 ddev start
