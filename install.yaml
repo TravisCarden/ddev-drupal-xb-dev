@@ -40,6 +40,10 @@ post_install_actions:
       --site-name="XB Local Dev"
     ddev drush en -y experience_builder
 
+    # Create a symlink to the module at a more convenient
+    # location for editing, at the project root.
+    ln -s web/modules/contrib/experience_builder experience_builder
+
     # Set environment variables for testing.
     cat > web/modules/contrib/experience_builder/ui/.env << EOF
     BASE_URL='http://web'
