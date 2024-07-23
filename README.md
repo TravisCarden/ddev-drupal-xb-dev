@@ -41,6 +41,18 @@ The resulting DDEV instance is just like any other one. Interact with it using [
 
 The installation process clones [the Experience Builder module](https://www.drupal.org/project/experience_builder) into `web/modules/contrib/experience_builder` and places an `experience_builder` symlink to it at the project root for convenient access. Develop and contribute from either location like you would any other Git repo for a normal Drupal project.
 
+To browse the site, run:
+
+```shell
+ddev launch
+```
+
+To log into the Drupal site, run:
+
+```shell
+ddev drush uli
+```
+
 To run Cypress tests, use the provided command:
 
 ```shell
