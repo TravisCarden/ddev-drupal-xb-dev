@@ -1,3 +1,5 @@
+web_environment:
+  - CYPRESS_CACHE_FOLDER=/var/www/html/.cache/cypress
 webimage_extra_packages:
   - libasound2
   - libgbm-dev
