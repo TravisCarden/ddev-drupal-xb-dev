@@ -39,7 +39,7 @@ ddev npm --prefix /var/www/html/web/modules/contrib/experience_builder/ui run bu
 
 The resulting DDEV instance is just like any other one. Interact with it using [the built-in commands](https://ddev.readthedocs.io/en/stable/users/usage/commands/), e.g., `ddev launch` to browse the site.
 
-The installation process clones [the Experience Builder module](https://www.drupal.org/project/experience_builder) into `web/modules/contrib/experience_builder`. Develop and contribute from there like any other Git repo for a normal Drupal project.
+The installation process clones [the Experience Builder module](https://www.drupal.org/project/experience_builder) into `web/modules/contrib/experience_builder` and places an `experience_builder` symlink to it at the project root for convenient access. Develop and contribute from either location like you would any other Git repo for a normal Drupal project.
 
 To run Cypress tests, use the provided command:
 
