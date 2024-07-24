@@ -15,7 +15,7 @@ Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 
 ## Installation
 
-The installation process is not yet in its final form--it takes more steps than it will in the end. Specifically, it will not ultimately be necessary to clone the add-on repo or manually run the `npm` commands. In the meantime...
+The installation process is not yet in its final form--it takes more steps than it will in the end. In the meantime...
 
 ```shell
 # Create a new directory for your dev site:
