@@ -1,6 +1,6 @@
 # DDEV Drupal Experience Builder Devel
 
-This configures a DDEV environment for Drupal Experience Builder (XB) module development. Specifically, it sets up the front-end dependencies and provides Cypress JavaScript testing functionality.
+This configures a DDEV environment for Drupal [Experience Builder](https://www.drupal.org/project/experience_builder) (XB) module development. Specifically, it sets up the front-end dependencies and provides Cypress JavaScript testing functionality.
 
 > ⚠️ **Note:** This a work-in-progress. It functions properly, but there's a little more automation and polish on the way.
 See [DDEV support for Cypress tests [#3458369] | Drupal.org](https://www.drupal.org/project/experience_builder/issues/3458369).
