@@ -1,0 +1,34 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Run Experience Builder's Cypress tests.
+## Usage: xb-cypress-run [spec-pattern]
+## Example: ddev xb-cypress-run                              Run all tests.\nddev xb-cypress-run --spec "e2e/*.cy.js"         Run all end-to-end tests.\nddev xb-cypress-run --spec "e2e/example.cy.js"   Run a specific test.
+## Flags: [{"Name":"spec","Shorthand":"s","Usage":"run specific spec (files) relative to web/modules/contrib/experience_builder/tests/src/Cypress/cypress","Type":"string","DefValue":"**/*.cy.{js,ts,jsx,tsx}"}]
+
+# Run all tests by default.
+SPEC_PATTERN="**/*.cy.{js,ts,jsx,tsx}"
+
+# Flag-handling.
+while :; do
+  case ${1:-} in
+
+  # Options.
+  -s | --spec)
+    SPEC_PATTERN="$2" ;;
+
+  --) # End of options.
+    shift
+    break ;;
+  -?*)
+    printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2 ;;
+  *) # Default case: No more options, so break out of the loop.
+    break ;;
+  esac
+  shift
+done
+
+cd /var/www/html/web/modules/contrib/experience_builder/ui || exit
+node_modules/.bin/cypress run \
+  --browser electron \
+  --spec "../tests/src/Cypress/cypress/${SPEC_PATTERN}"
