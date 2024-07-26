@@ -10,6 +10,7 @@ pre_install_actions:
 
 project_files:
   - commands/web/xb-cypress-run
+  - commands/web/xb-npm-ci
   - config.drupal-xb-dev.yaml
 
 post_install_actions:
@@ -53,3 +54,9 @@ post_install_actions:
     EOF
 
     echo '$settings["extension_discovery_scan_tests"] = TRUE;' >> web/sites/default/settings.ddev.php
+
+    # Initialize the environment.
+    ddev start
+
+    # Build npm assets.
+    ddev xb-npm-ci
