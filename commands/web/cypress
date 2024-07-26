@@ -3,10 +3,30 @@
 ## #ddev-generated
 ## Description: Run Experience Builder's Cypress tests.
 ## Usage: cypress [spec-pattern]
-## Example: ddev cypress                       Run all tests.\nddev cypress "e2e/*.cy.js"         Run all end-to-end tests.\nddev cypress "e2e/example.cy.js"   Run a specific test.
+## Example: ddev cypress                              Run all tests.\nddev cypress --spec "e2e/*.cy.js"         Run all end-to-end tests.\nddev cypress --spec "e2e/example.cy.js"   Run a specific test.
+## Flags: [{"Name":"spec","Shorthand":"s","Usage":"run specific spec (files) relative to web/modules/contrib/experience_builder/tests/src/Cypress/cypress","Type":"string","DefValue":"**/*.cy.{js,ts,jsx,tsx}"}]
 
 # Run all tests by default.
-SPEC_PATTERN="${1}"
+SPEC_PATTERN="**/*.cy.{js,ts,jsx,tsx}"
+
+# Flag-handling.
+while :; do
+  case ${1:-} in
+
+  # Options.
+  -s | --spec)
+    SPEC_PATTERN="$2" ;;
+
+  --) # End of options.
+    shift
+    break ;;
+  -?*)
+    printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2 ;;
+  *) # Default case: No more options, so break out of the loop.
+    break ;;
+  esac
+  shift
+done
 
 # if [ "${DDEV_PROJECT_STATUS}" != "running" ] && [ -z "$no_recursion" ]; then
 #   echo "Project ${DDEV_PROJECT} is not running. Starting it..."
