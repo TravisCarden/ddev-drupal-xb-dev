@@ -19,4 +19,4 @@ ddev npm --prefix /var/www/html/web/modules/contrib/experience_builder/ui instal
 ddev npm --prefix /var/www/html/web/modules/contrib/experience_builder/ui run build
 
 # Exercise the custom command.
-ddev cypress --spec "e2e/canary.cy.js"
+ddev xb-cypress-run --spec "e2e/canary.cy.js"

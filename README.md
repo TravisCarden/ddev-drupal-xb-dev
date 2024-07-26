@@ -56,7 +56,7 @@ ddev drush uli
 To run Cypress tests, use the provided command:
 
 ```shell
-ddev cypress                       # Run all tests.
-ddev cypress "e2e/*.cy.js"         # Run all end-to-end tests.
-ddev cypress "e2e/example.cy.js"   # Run a specific test.
+ddev xb-cypress-run                       # Run all tests.
+ddev xb-cypress-run "e2e/*.cy.js"         # Run all end-to-end tests.
+ddev xb-cypress-run "e2e/example.cy.js"   # Run a specific test.
 ```

@@ -9,7 +9,7 @@ pre_install_actions:
   - ddev get ddev/ddev-selenium-standalone-chrome
 
 project_files:
-  - commands/web/cypress
+  - commands/web/xb-cypress-run
   - config.drupal-xb-dev.yaml
 
 post_install_actions:
