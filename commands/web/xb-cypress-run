@@ -6,6 +6,8 @@
 ## Example: ddev xb-cypress-run                              Run all tests.\nddev xb-cypress-run --spec "e2e/*.cy.js"         Run all end-to-end tests.\nddev xb-cypress-run --spec "e2e/example.cy.js"   Run a specific test.
 ## Flags: [{"Name":"spec","Shorthand":"s","Usage":"run specific spec (files) relative to web/modules/contrib/experience_builder/tests/src/Cypress/cypress","Type":"string","DefValue":"**/*.cy.{js,ts,jsx,tsx}"}]
 
+cd /var/www/html/web/modules/contrib/experience_builder/ui || exit 1
+
 # Run all tests by default.
 SPEC_PATTERN="**/*.cy.{js,ts,jsx,tsx}"
 
@@ -28,7 +30,6 @@ while :; do
   shift
 done
 
-cd /var/www/html/web/modules/contrib/experience_builder/ui || exit
 node_modules/.bin/cypress run \
   --browser electron \
   --spec "../tests/src/Cypress/cypress/${SPEC_PATTERN}"
