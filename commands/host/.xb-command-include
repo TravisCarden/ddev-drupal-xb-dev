@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cd "$DDEV_APPROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
+
+if [ -z "$(which node)" ]; then
+  echo 'Missing required Node.js on the host. Install it and try again.'
+  echo 'Hint: https://nodejs.org/en/learn/getting-started/how-to-install-nodejs'
+  exit 1
+fi
+
+export BASE_URL="$DDEV_PRIMARY_URL"
+export CYPRESS_BASE_URL="$DDEV_PRIMARY_URL"
+export DB_URL="sqlite://web/sites/default/files/db.sqlite"
+export DRUPAL_TEST_DB_URL="sqlite://web/sites/default/files/db.sqlite"
+export SIMPLETEST_DB="sqlite://web/sites/default/files/db.sqlite"
+export VITE_SERVER_ORIGIN="$DDEV_PRIMARY_URL:5173"
