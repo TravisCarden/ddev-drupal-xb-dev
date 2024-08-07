@@ -1,13 +1,20 @@
 #!/bin/bash
 
 ## #ddev-generated
-## Description: Run Experience Builder's Cypress tests.
+## Description: Run Experience Builder's Cypress tests. (Be sure to run `ddev xb-x11` first.)
 ## Usage: xb-cypress-run [spec-pattern]
 ## Example: ddev xb-cypress-run                              Run all tests.\nddev xb-cypress-run --spec "e2e/*.cy.js"         Run all end-to-end tests.\nddev xb-cypress-run --spec "e2e/example.cy.js"   Run a specific test.
 ## Aliases: cy-run,cy:run
 ## Flags: [{"Name":"spec","Shorthand":"s","Usage":"run specific spec (files) relative to web/modules/contrib/experience_builder/tests/src/Cypress/cypress","Type":"string","DefValue":"**/*.cy.{js,ts,jsx,tsx}"}]
 
-cd "$(dirname "$0")" || exit 1; source .xb-command-include || exit 1
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
+
+CYPRESS=node_modules/.bin/cypress
+
+if [ ! -f $CYPRESS ]; then
+  echo 'Cypress is not installed. Run "ddev xb-npm-ci" and try again.'
+  exit 1
+fi
 
 # Run all tests by default.
 SPEC_PATTERN="**/*.cy.{js,ts,jsx,tsx}"
@@ -31,6 +38,6 @@ while :; do
   shift
 done
 
-node_modules/.bin/cypress run \
+$CYPRESS run \
   --browser electron \
   --spec "../tests/src/Cypress/cypress/${SPEC_PATTERN}"

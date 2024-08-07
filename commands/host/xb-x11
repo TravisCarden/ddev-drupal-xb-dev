@@ -1,0 +1,12 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Run the (XQuartz) X Window server for Cypress tests.
+## Example: ddev xb-x11
+## Aliases: x11,xquartz
+
+# Add the host IP to the allowed X11 hosts.
+xhost +
+
+# Run the server.
+open -a XQuartz

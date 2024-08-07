@@ -16,6 +16,10 @@ Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 ## Installation
 
 ```shell
+# On macOS, install the XQuartz X Window System.
+# See https://www.xquartz.org/ or use Homebrew, like this:
+brew install xquartz
+
 # Create a new directory for your dev site:
 mkdir ~/Sites/xb-dev && cd ~/Sites/xb-dev
 
@@ -50,10 +54,24 @@ To clean install the module's UI app, i.e., rebuild its front-end assets.
 ddev xb-npm-ci
 ```
 
-To run Cypress tests, use the provided command:
+### Cypress
+
+Before running Cypress tests, make sure your X Window server is running. On macOS, use the following command to start XQuartz. If you close XQuartz, use the command to open it again. It won't work to just open it directly. 
 
 ```shell
-ddev xb-cypress-run                       # Run all tests.
-ddev xb-cypress-run "e2e/*.cy.js"         # Run all end-to-end tests.
-ddev xb-cypress-run "e2e/example.cy.js"   # Run a specific test.
+ddev xb-x11
+```
+
+To run Cypress tests headlessly, use the `ddev xb-cypress-run` command:
+
+```shell
+ddev xb-cypress-run                             # Run all tests.
+ddev xb-cypress-run --spec "e2e/*.cy.js"        # Run all end-to-end tests.
+ddev xb-cypress-run --spec "e2e/canary.cy.js"   # Run a specific test.
+```
+
+To run them interactively, use `ddev xb-cypress-open`:
+
+```shell
+ddev xb-cypress-open
 ```

@@ -5,6 +5,6 @@
 ## Example: ddev xb-npm-ci
 ## Aliases: npm-ci,npm:ci
 
-cd "$(dirname "$0")" || exit 1; source .xb-command-include || exit 1
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
 
 npm ci

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Run Experience Builder's Cypress tests in interactive mode. (Be sure to run `ddev xb-x11` first.)
+## Usage: xb-cypress-open
+## Example: ddev xb-cypress-open
+## Aliases: cy-open,cy:open
+## OSTypes: darwin
+
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
+
+CYPRESS=node_modules/.bin/cypress
+
+if [ ! -f $CYPRESS ]; then
+  echo 'Cypress is not installed. Run "ddev xb-npm-ci" and try again.'
+  exit 1
+fi
+
+$CYPRESS open \
+  --browser electron \
+  --project .
