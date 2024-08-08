@@ -2,19 +2,12 @@
 
 ## #ddev-generated
 ## Description: Run Experience Builder's Cypress tests. (Be sure to run `ddev xb-x11` first.)
-## Usage: xb-cypress-run [spec-pattern]
+## Usage: xb-cypress-run [--spec spec-pattern]
 ## Example: ddev xb-cypress-run                              Run all tests.\nddev xb-cypress-run --spec "e2e/*.cy.js"         Run all end-to-end tests.\nddev xb-cypress-run --spec "e2e/example.cy.js"   Run a specific test.
 ## Aliases: cy-run,cy:run
 ## Flags: [{"Name":"spec","Shorthand":"s","Usage":"run specific spec (files) relative to web/modules/contrib/experience_builder/tests/src/Cypress/cypress","Type":"string","DefValue":"**/*.cy.{js,ts,jsx,tsx}"}]
-
-cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
-
-CYPRESS=node_modules/.bin/cypress
-
-if [ ! -f $CYPRESS ]; then
-  echo 'Cypress is not installed. Run "ddev xb-npm-ci" and try again.'
-  exit 1
-fi
+## OSTypes: darwin
+## ExecRaw: true
 
 # Run all tests by default.
 SPEC_PATTERN="**/*.cy.{js,ts,jsx,tsx}"
@@ -38,6 +31,14 @@ while :; do
   shift
 done
 
-$CYPRESS run \
-  --browser electron \
-  --spec "../tests/src/Cypress/cypress/${SPEC_PATTERN}"
+# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
+# TODO: Check for the presence of XQuartz and instruct the user to install it and try again if not.
+
+# Add the host IP to the allowed X11 hosts and run XQuartz.
+xhost +
+open -a XQuartz
+
+# Run Cypress.
+ddev exec \
+  --dir /var/www/html/web/modules/contrib/experience_builder/ui \
+  "node_modules/.bin/cypress run --browser electron --spec '../tests/src/Cypress/cypress/${SPEC_PATTERN}'"

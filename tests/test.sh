@@ -22,9 +22,3 @@ ddev config \
 
 # Get the add-on.
 ddev get ../../
-
-# Run XQuartz.
-ddev xb-x11
-
-# Exercise the headless runner.
-ddev xb-cypress-run --spec "e2e/canary.cy.js"
