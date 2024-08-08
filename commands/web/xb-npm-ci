@@ -1,8 +1,10 @@
 #!/bin/bash
 
 ## #ddev-generated
-## Description: Clean installs Experience Builder's UI app.
+## Description: Clean-install Experience Builder's UI app.
 ## Example: ddev xb-npm-ci
+## Aliases: npm-ci,npm:ci
 
-cd /var/www/html/web/modules/contrib/experience_builder/ui || exit
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
+
 npm ci

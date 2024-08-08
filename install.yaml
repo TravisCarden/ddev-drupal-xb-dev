@@ -5,11 +5,12 @@
 name: drupal-xb-dev
 
 pre_install_actions:
-  - ddev composer create drupal/recommended-project:^11.x-dev
+  - ddev composer create drupal/recommended-project:^11.x-dev --no-install
   - ddev get ddev/ddev-selenium-standalone-chrome
 
 project_files:
-  - commands/web/xb-cypress-run
+  - commands/host/xb-cypress-open
+  - commands/host/xb-cypress-run
   - commands/web/xb-npm-ci
   - config.drupal-xb-dev.yaml
 
@@ -17,36 +18,38 @@ post_install_actions:
   - |
     cd ../
 
+    MODULE_PATH=web/modules/contrib/experience_builder
+
     # Require Drush, but don't install yet for performance reasons.
     ddev composer \
-      require \
-      --no-install \
-      drush/drush
+    require \
+    --no-install \
+    drush/drush
 
     # Place the Experience Builder module via Git for development. Require
     # it with Composer to test its composer.json and place dependencies.
     git clone \
-      git@git.drupal.org:project/experience_builder.git \
-      web/modules/contrib/experience_builder
+    git@git.drupal.org:project/experience_builder.git \
+    $MODULE_PATH
     ddev composer config \
-      repositories.xb \
-      path \
-      web/modules/contrib/experience_builder
+    repositories.xb \
+    path \
+    $MODULE_PATH
     ddev composer require drupal/experience_builder
 
     # Install Drupal and the Experience Builder module.
     ddev drush site:install -y \
-      --account-name=admin \
-      --account-pass=admin \
-      --site-name="XB Local Dev"
+    --account-name=admin \
+    --account-pass=admin \
+    --site-name="XB Local Dev"
     ddev drush en -y experience_builder
 
     # Create a symlink to the module at a more convenient
     # location for editing, at the project root.
-    ln -s web/modules/contrib/experience_builder experience_builder
+    ln -s $MODULE_PATH experience_builder
 
     # Set environment variables for testing.
-    cat > web/modules/contrib/experience_builder/ui/.env << EOF
+    cat > "$MODULE_PATH/ui/.env" << EOF
     BASE_URL='http://web'
     DRUPAL_TEST_DB_URL=sqlite://web/sites/default/files/db.sqlite
     DB_URL=sqlite://web/sites/default/files/db.sqlite

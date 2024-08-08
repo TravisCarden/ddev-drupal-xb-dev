@@ -1,0 +1,21 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Run Experience Builder's Cypress tests in interactive mode. (Be sure to run `ddev xb-x11` first.)
+## Usage: xb-cypress-open
+## Example: ddev xb-cypress-open
+## Aliases: cy-open,cy:open
+## OSTypes: darwin
+## ExecRaw: true
+
+# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
+# TODO: Check for the presence of XQuartz and instruct the user to install it and try again if not.
+
+# Add the host IP to the allowed X11 hosts and run XQuartz.
+xhost +
+open -a XQuartz
+
+# Run Cypress.
+ddev exec \
+  --dir /var/www/html/web/modules/contrib/experience_builder/ui \
+  "node_modules/.bin/cypress open --browser electron --project ."

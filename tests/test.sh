@@ -1,17 +1,24 @@
 #!/usr/bin/env sh
 
 cd "$(dirname "$0")/../var" && clear || exit 1
+clear; set -ev
+
+PROJECT_DIR="test"
+PROJECT_NAME=drupal-xb-dev-test
 
 # Clean up
-SITE_NAME=drupal-xb-dev-test
-yes | ddev clean $SITE_NAME || true
-rm -rf $SITE_NAME || true
-mkdir $SITE_NAME && cd $SITE_NAME || exit 1
+yes | ddev clean $PROJECT_NAME || true
+ddev remove --unlist $PROJECT_NAME || true
+rm -rf $PROJECT_DIR || true
+mkdir $PROJECT_DIR
+cd $PROJECT_DIR || exit 1
 
 # Create a new project.
-ddev config --project-type=drupal --php-version=8.3 --docroot=web
-ddev get ../../
-ddev status
+ddev config \
+  --project-name=$PROJECT_NAME \
+  --project-type=drupal \
+  --php-version=8.3 \
+  --docroot=web
 
-# Exercise the custom command.
-ddev xb-cypress-run --spec "e2e/canary.cy.js"
+# Get the add-on.
+ddev get ../../

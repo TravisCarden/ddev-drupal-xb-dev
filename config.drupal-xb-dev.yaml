@@ -1,5 +1,7 @@
+#ddev-generated
 web_environment:
   - CYPRESS_CACHE_FOLDER=/var/www/html/.cache/cypress
+  - DISPLAY=host.docker.internal:0
 webimage_extra_packages:
   - libasound2
   - libgbm-dev
