@@ -16,11 +16,29 @@ Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 
 ## Installation
 
+### Prerequisites: XQuartz
+
 ```shell
-# On macOS, install the XQuartz X Window System for Cypress testing.
+# Install the XQuartz X Window System for Cypress testing.
 # See https://www.xquartz.org/ or use Homebrew, like this:
 brew install xquartz
+```
 
+Log out and back in or restart your machine.
+
+Configure XQuartz to allow connections from the host:
+
+- Open XQuartz
+- Open Preferences
+- Go to the "Security" tab
+- Check the "Allow connections from network clients" checkbox
+- Restart your machine for the change to take effect.
+
+![xquartz-settings.png](resources/xquartz-settings.png)
+
+### Setup
+
+```shell
 # Create a new directory for your dev site:
 mkdir ~/Sites/xb-dev && cd ~/Sites/xb-dev
 
