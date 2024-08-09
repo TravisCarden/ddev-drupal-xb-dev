@@ -56,6 +56,7 @@ post_install_actions:
     VITE_SERVER_ORIGIN='http://localhost:5173'
     EOF
 
+    # shellcheck disable=SC2016
     echo '$settings["extension_discovery_scan_tests"] = TRUE;' >> web/sites/default/settings.ddev.php
 
     # Initialize the environment.
