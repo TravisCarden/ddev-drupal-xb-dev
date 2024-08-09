@@ -4,8 +4,9 @@
 # but without installing it. That way any issues with the add-on itself might be
 # be identified.
 #
-# First, install XQuartz according to the instructions at
+# First, install XQuartz (and ONLY XQuartz) according to the instructions at
 # https://github.com/TravisCarden/ddev-drupal-xb-dev#prerequisites-xquartz
+# (Stop after configuring XQuartz--do not continue with the steps in the README.
 #
 # Then run the following commands on your host machine to clone the
 # repository fresh and run the script:
