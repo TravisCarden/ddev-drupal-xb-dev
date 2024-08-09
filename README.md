@@ -24,15 +24,13 @@ Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 brew install xquartz
 ```
 
-Log out and back in or restart your machine.
-
 Configure XQuartz to allow connections from the host:
 
 - Open XQuartz
 - Open Preferences
 - Go to the "Security" tab
 - Check the "Allow connections from network clients" checkbox
-- Restart your machine for the change to take effect.
+- Log out and back in or restart your machine for the change to take effect.
 
 ![xquartz-settings.png](resources/xquartz-settings.png)
 
