@@ -6,7 +6,7 @@ clear; set -ev
 PROJECT_DIR="test"
 PROJECT_NAME=drupal-xb-dev-test
 
-# Clean up
+# Clean up from previous runs.
 yes | ddev clean $PROJECT_NAME || true
 ddev remove --unlist $PROJECT_NAME || true
 rm -rf $PROJECT_DIR || true
