@@ -83,9 +83,7 @@ EOF
 echo '$settings["extension_discovery_scan_tests"] = TRUE;' >> web/sites/default/settings.ddev.php
 
 # Configure container.
-#cat "$(dirname "$0")/../config.drupal-xb-dev.yaml" \
-#  >> .ddev/config.yaml
-cp "$(dirname "$0")/../config.drupal-xb-dev.yaml" \
+cp ../../config.drupal-xb-dev.yaml \
   .ddev/config.drupal-xb-dev.yaml
 
 # Initialize the environment.
