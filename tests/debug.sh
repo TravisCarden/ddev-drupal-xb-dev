@@ -2,7 +2,12 @@
 
 # This file is to help debug this add-on by directly doing what the add-on does
 # but without installing it. That way any issues with the add-on itself might be
-# be identified. Run the following commands on your host machine to clone the
+# be identified.
+#
+# First, install XQuartz according to the instructions at
+# https://github.com/TravisCarden/ddev-drupal-xb-dev#prerequisites-xquartz
+#
+# Then run the following commands on your host machine to clone the
 # repository fresh and run the script:
 #
 #   cd ~/Projects/temp # This can be anywhere you want.
