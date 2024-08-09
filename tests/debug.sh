@@ -1,5 +1,15 @@
 #!/usr/bin/env sh
 
+# This file is to help debug this add-on by directly doing what the add-on does
+# but without installing it. That way any issues with the add-on itself might be
+# be identified. Run the following commands on your host machine to clone the
+# repository fresh and run the script:
+#
+#   cd ~/Projects/temp # This can be anywhere you want.
+#   git clone git@github.com:TravisCarden/ddev-drupal-xb-dev.git
+#   cd ddev-drupal-xb-dev
+#   ./tests/debug.sh
+
 cd "$(dirname "$0")/../var" && clear || exit 1
 clear; set -ev
 
@@ -12,9 +22,9 @@ if [ -d $PROJECT_DIR/.ddev ]; then
   yes | ddev clean $PROJECT_NAME || true
   ddev remove --unlist $PROJECT_NAME || true
   rm -rf $PROJECT_DIR || true
-  mkdir $PROJECT_DIR
 fi
 
+mkdir $PROJECT_DIR || true
 cd $PROJECT_DIR || exit 1
 
 # Create a new project.
