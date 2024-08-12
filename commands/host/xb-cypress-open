@@ -13,6 +13,8 @@
 
 # Add the host IP to the allowed X11 hosts and run XQuartz.
 xhost +
+
+# xhost should open XQuartz automatically, but just to be sure...
 open -a XQuartz
 
 # Run Cypress.

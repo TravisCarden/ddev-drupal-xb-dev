@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-# This file is to help debug this add-on by directly doing what the add-on does
-# but without installing it. That way any issues with the add-on itself might be
+# This file is for debugging this add-on by directly doing what it does but
+# without installing it. That way any issues with the add-on itself might be
 # be identified.
 #
 # First, install XQuartz (and ONLY XQuartz) according to the instructions at
@@ -95,9 +95,13 @@ ddev exec \
   --dir "/var/www/html/$MODULE_PATH/ui" \
   "npm ci"
 
-# Run Cypress.
+# Add the host IP to the allowed X11 hosts and run XQuartz.
 xhost +
+
+# xhost should open XQuartz automatically, but just to be sure...
 open -a XQuartz
+
+# Run Cypress.
 ddev exec \
   --dir "/var/www/html/$MODULE_PATH/ui" \
   "node_modules/.bin/cypress open --browser electron --project ."
