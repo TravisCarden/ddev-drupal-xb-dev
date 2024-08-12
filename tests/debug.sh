@@ -87,8 +87,9 @@ echo '$settings["extension_discovery_scan_tests"] = TRUE;' >> web/sites/default/
 cp ../../config.drupal-xb-dev.yaml \
   .ddev/config.drupal-xb-dev.yaml
 
-# Initialize the environment.
-ddev start
+# Initialize the environment. (Decline "beam up" prompt
+# if this is the first time running `ddev start`.)
+no | ddev start
 
 # Build npm assets.
 ddev exec \
