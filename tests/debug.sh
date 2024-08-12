@@ -24,7 +24,8 @@ PROJECT_NAME=drupal-xb-dev-debug
 MODULE_PATH=web/modules/contrib/experience_builder
 
 # Clean up from previous runs.
-if [ -d $PROJECT_DIR/.ddev ]; then
+PROJECT_EXISTS=$(ddev list | grep -q $PROJECT_NAME) || true
+if [ -d $PROJECT_DIR ] || [ -n "$PROJECT_EXISTS" ]; then
   yes | ddev clean $PROJECT_NAME || true
   ddev remove --unlist $PROJECT_NAME || true
   rm -rf $PROJECT_DIR || true

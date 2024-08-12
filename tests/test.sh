@@ -7,10 +7,14 @@ PROJECT_DIR="test"
 PROJECT_NAME=drupal-xb-dev-test
 
 # Clean up from previous runs.
-yes | ddev clean $PROJECT_NAME || true
-ddev remove --unlist $PROJECT_NAME || true
-rm -rf $PROJECT_DIR || true
-mkdir $PROJECT_DIR
+PROJECT_EXISTS=$(ddev list | grep -q $PROJECT_NAME) || true
+if [ -d $PROJECT_DIR ] || [ -n "$PROJECT_EXISTS" ]; then
+  yes | ddev clean $PROJECT_NAME || true
+  ddev remove --unlist $PROJECT_NAME || true
+  rm -rf $PROJECT_DIR || true
+fi
+
+mkdir $PROJECT_DIR || true
 cd $PROJECT_DIR || exit 1
 
 # Create a new project.
