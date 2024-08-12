@@ -26,3 +26,6 @@ ddev config \
 
 # Get the add-on.
 ddev get ../../
+
+# Run Cypress.
+ddev xb-cypress-open
