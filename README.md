@@ -65,6 +65,7 @@ cd ~/Sites/xb-dev
 ddev config --project-type=drupal --php-version=8.3 --docroot=web
 
 # Get the add-on. It will do the rest.
+# Expect this step to take ten minutes or more, including a long period without output.
 ddev get TravisCarden/ddev-drupal-xb-dev
 ```
 
