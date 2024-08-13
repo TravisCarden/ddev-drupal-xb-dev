@@ -99,18 +99,16 @@ ddev xb-npm-ci
 
 Cypress testing is currently only supported on macOS. Make sure you have installed and carefully configured XQuartz per [the instructions above](#xquartz).
 
-To run the tests interactively, use `ddev xb-cypress-open`:
+Run tests interactively:
 
 ```shell
 ddev xb-cypress-open
 ```
 
-To run them headlessly, use `ddev xb-cypress-run`:
+Run them headlessly:
 
 ```shell
-ddev xb-cypress-run                             # Run all tests.
-ddev xb-cypress-run --spec "e2e/*.cy.js"        # Run all end-to-end tests.
-ddev xb-cypress-run --spec "e2e/canary.cy.js"   # Run a specific test.
+ddev xb-cypress-run
 ```
 
 ## Updating
