@@ -2,6 +2,8 @@
 
 This creates and configures a DDEV project for local Drupal [Experience Builder](https://www.drupal.org/project/experience_builder) (XB) module development. Specifically, it creates a Drupal site, clones and installs the module, sets up the front-end dependencies, and provides Cypress JavaScript testing functionality.
 
+This creates a new project from scratch; it cannot be added to an existing DDEV project. It has not been tested, but it is probably destructive and will certainly fail. (Don't try.)
+
 >  **Notice:** This add-on is experimental. See [Support & community](#support--community) below.
 
 - [Requirements](#requirements)
@@ -52,8 +54,6 @@ Configure XQuartz to allow connections from the host:
 ![XQuartz Preferences dialog](resources/xquartz-settings.png)
 
 ## Installation
-
-This add-on will create a new project from scratch. It cannot be added to an existing DDEV project, and its behavior if attempted is unspecified. (Don't try.)
 
 ```shell
 # Create a new directory for your new DDEV project.
