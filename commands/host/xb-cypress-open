@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## #ddev-generated
-## Description: Run Experience Builder's Cypress tests in interactive mode. (Be sure to run `ddev xb-x11` first.)
+## Description: Run Experience Builder's Cypress tests in interactive mode.
 ## Usage: xb-cypress-open
 ## Example: ddev xb-cypress-open
 ## Aliases: cy-open,cy:open
