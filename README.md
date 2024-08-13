@@ -111,6 +111,12 @@ Run them headlessly:
 ddev xb-cypress-run
 ```
 
+Run component/unit tests:
+
+```shell
+ddev xb-cypress-component
+```
+
 ## Updating
 
 Update the XB module clone just like you would any other Git repo. No tools are currently provided for updating Core or reinstalling the site.

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Run Experience Builder's Cypress component/unit tests.
+## Usage: xb-cypress-component
+## Example: ddev xb-cypress-component                     Run all tests.\nddev xb-cypress-component --env "VAR=value"   Pass arbitrary command arguments.
+## Aliases: cy-component,cy:component
+## OSTypes: darwin
+## ExecRaw: true
+
+# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
+# TODO: Check for the presence of XQuartz and instruct the user to install it and try again if not.
+
+# xhost below should open XQuartz automatically, but just to be sure...
+open -a XQuartz
+
+# Give XQuartz a moment to start up.
+sleep 2
+
+# Add the host IP to the allowed X11 hosts and run XQuartz.
+xhost +
+
+# Run Cypress.
+ddev exec \
+  --dir /var/www/html/web/modules/contrib/experience_builder/ui \
+  "node_modules/.bin/cypress run --component " . "$@"
