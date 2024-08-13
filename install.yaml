@@ -59,9 +59,7 @@ post_install_actions:
     # shellcheck disable=SC2016
     echo '$settings["extension_discovery_scan_tests"] = TRUE;' >> web/sites/default/settings.ddev.php
 
-    # Initialize the environment. (Decline "beam up" prompt
-    # if this is the first time running `ddev start`.)
-    no | ddev start
+    # Initialize the environment.
     ddev start
 
     # Build npm assets.
