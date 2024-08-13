@@ -20,7 +20,7 @@ These instructions create a new project from scratch. The add-on cannot be added
 Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 
 ### Docker provider
-This has been successfully tested with Orbstack, Colima, and Docker Desktop. Colima and Docker Desktop work out-of-the-box. Orbstack requires one change:
+This has been successfully tested with Orbstack, Colima, Rancher Desktop and Docker Desktop. Colima and Docker Desktop work out-of-the-box. Orbstack requires one change:
 
 #### Orbstack
 
@@ -29,6 +29,15 @@ Override the default `$DISPLAY` environment variable in the container by adding 
 ```yaml
 web_environment:
   - DISPLAY=host.orb.internal:0
+```
+
+#### Rancher Desktop
+
+Override the default `$DISPLAY` environment variable in the container by adding the following to your `.ddev/config.yaml` file:
+
+```yaml
+web_environment:
+  - DISPLAY=host.rancher-desktop.internal:0
 ```
 
 ### XQuartz
