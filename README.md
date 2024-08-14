@@ -95,6 +95,12 @@ To clean-install the module's UI app, i.e., rebuild its front-end assets, run th
 ddev xb-npm-ci
 ```
 
+To completely reinstall Drupal and the Experience Builder module, run:
+
+```shell
+ddev xb-drush-si
+```
+
 ### Cypress
 
 Cypress testing is currently only supported on macOS. Make sure you have installed and carefully configured XQuartz per [the instructions above](#xquartz).
