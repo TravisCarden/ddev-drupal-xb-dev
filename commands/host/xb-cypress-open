@@ -8,17 +8,7 @@
 ## OSTypes: darwin
 ## ExecRaw: true
 
-# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
-# TODO: Check for the presence of XQuartz and instruct the user to install it and try again if not.
-
-# xhost below should open XQuartz automatically, but just to be sure...
-open -a XQuartz
-
-# Give XQuartz a moment to start up.
-sleep 2
-
-# Add the host IP to the allowed X11 hosts and run XQuartz.
-xhost +
+cd "$(dirname "$0")" || exit; source .xb-command-include
 
 # Run Cypress.
 ddev exec \

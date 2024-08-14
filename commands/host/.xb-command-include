@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# NAME
+#     .xb-command-include - Include reusable code.
+#
+# SYNOPSIS
+#     cd "$(dirname "$0")" || exit; source .xb-command-include
+#
+# DESCRIPTION
+#     Includes common features used by XB commands.
+
+# Exit as soon as one command returns a non-zero exit code.
+set -e
+
+# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
+# TODO: Check for the presence of XQuartz and instruct the user to install it and try again if not.
+
+# Ensures that XQuartz is configured and running.
+function ensure_xquartz {
+  if ! pgrep -x Xquartz &> /dev/null; then
+    # Run XQuartz and give it a moment to start up.
+    open -a XQuartz
+    sleep 2
+  fi
+  # Add the host IP to the allowed X11 hosts.
+  xhost +
+}
+
+ensure_xquartz
