@@ -33,5 +33,12 @@ function ensure_xquartz_is_running {
   xhost +
 }
 
+function xb_cypress {
+  echo "$1"
+  ddev exec \
+    --dir /var/www/html/web/modules/contrib/experience_builder/ui \
+    "node_modules/.bin/cypress $1"
+}
+
 assert_xquartz_is_installed
 ensure_xquartz_is_running

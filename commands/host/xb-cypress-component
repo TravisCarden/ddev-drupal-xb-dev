@@ -10,7 +10,4 @@
 
 cd "$(dirname "$0")" || exit; source .xb-command-include
 
-# Run Cypress.
-ddev exec \
-  --dir /var/www/html/web/modules/contrib/experience_builder/ui \
-  "node_modules/.bin/cypress run --component " . "$@"
+xb_cypress "run --component $*"
