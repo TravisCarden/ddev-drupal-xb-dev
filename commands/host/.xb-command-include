@@ -14,6 +14,7 @@ set -e
 
 # TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
 
+# Fails if XQuartz is not installed.
 function assert_xquartz_is_installed {
   if ! open -Ra XQuartz ; then
     echo Cannot find XQuartz. Install it and try again.
@@ -23,7 +24,7 @@ function assert_xquartz_is_installed {
 }
 
 # Ensures that XQuartz is configured and running.
-function ensure_xquartz_is_running {
+function ensure_xquartz {
   if ! pgrep -x Xquartz &> /dev/null; then
     # Run XQuartz and give it a moment to start up.
     open -a XQuartz
@@ -33,12 +34,11 @@ function ensure_xquartz_is_running {
   xhost +
 }
 
+# Runs a given Cypress command, e.g., `xb_cypress run --e2e`.
 function xb_cypress {
-  echo "$1"
+  assert_xquartz_is_installed
+  ensure_xquartz
   ddev exec \
     --dir /var/www/html/web/modules/contrib/experience_builder/ui \
     "node_modules/.bin/cypress $1"
 }
-
-assert_xquartz_is_installed
-ensure_xquartz_is_running
