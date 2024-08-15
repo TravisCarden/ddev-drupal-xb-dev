@@ -38,8 +38,33 @@ ddev config \
   --php-version=8.3 \
   --docroot=web
 
+# Configure the new DDEV project.
+ddev config --project-type=drupal --php-version=8.3 --docroot=web
+
+# Create the Drupal project.
+ddev composer create drupal/recommended-project:^11.x-dev --no-install
+
 # Get the add-on.
 ddev get ../../
+
+# Perform one-time setup operations.
+ddev xb-setup
+
+# Test an update.
+ddev get ../../
+
+# Try to perform one-time setup operations when they've already been done.
+ddev xb-setup
+
+# Simulate a broken setup and make sure the setup command aborts.
+ddev exec "rm -rf web/modules/contrib/experience_builder"
+ddev xb-setup
+
+# Make sure the setup command works on a broken setup when forced.
+ddev xb-setup --force
+
+# Make sure the setup command aborts given an unknown flag.
+ddev xb-setup --foobar
 
 # Run Cypress.
 ddev xb-cypress-open

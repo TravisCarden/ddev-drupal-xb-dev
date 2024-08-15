@@ -4,57 +4,15 @@
 
 name: drupal-xb-dev
 
-pre_install_actions:
-  - echo Creating the Drupal project. This will take several minutes without output.
-  - |
-    #ddev-description:Create Drupal project
-    ddev composer create drupal/recommended-project:^11.x-dev --no-install
-  - |
-    #ddev-description:Install DDEV Selenium Standalone Chrome
-    ddev get ddev/ddev-selenium-standalone-chrome
-
 project_files:
   - commands/host/.xb-command-include
   - commands/host/xb-cypress-component
   - commands/host/xb-cypress-open
   - commands/host/xb-cypress-run
+  - commands/host/xb-setup
   - commands/web/xb-drush-si
   - commands/web/xb-npm-ci
   - config.drupal-xb-dev.yaml
 
 post_install_actions:
-  - |
-    #ddev-description:Install Drush
-    # Require Drush, but don't install yet for performance reasons.
-    ddev composer \
-      require \
-      --no-install \
-      drush/drush
-  - |
-    #ddev-description:Place the Experience Builder module
-    # Place the Experience Builder module via Git for development. Require
-    # it with Composer to test its composer.json and place dependencies.
-    git clone \
-      git@git.drupal.org:project/experience_builder.git \
-      ../web/modules/contrib/experience_builder
-    ddev composer config \
-      repositories.xb \
-      path \
-      web/modules/contrib/experience_builder
-    ddev composer require drupal/experience_builder
-  - |
-    #ddev-description:Install Drupal and enable the Experience Builder module
-    # Install Drupal and the Experience Builder module.
-    ddev xb-drush-si
-    # Create a symlink to the module at a more convenient
-    # location for editing, at the project root.
-    ln -s ../web/modules/contrib/experience_builder ../experience_builder
-    printf '\n\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' >> ../web/sites/default/settings.ddev.php
-    tail ../web/sites/default/settings.ddev.php
-  - |
-    #ddev-description:Initialize the environment
-    ddev start
-  - echo Building front-end assets. This will take several minutes without output.
-  - |
-    #ddev-description:Build front-end assets.
-    ddev xb-npm-ci
+  - echo "‼️ If you're setting up this add-on for the first time on this project, finish installation by running 'ddev xb-setup'"
