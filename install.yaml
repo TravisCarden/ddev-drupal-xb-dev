@@ -52,14 +52,6 @@ post_install_actions:
     printf '\n\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' >> ../web/sites/default/settings.ddev.php
     tail ../web/sites/default/settings.ddev.php
   - |
-    #ddev-description:Set environment variables for testing
-    cat > "../web/modules/contrib/experience_builder/ui/.env" << EOF
-    BASE_URL='http://web'
-    DRUPAL_TEST_DB_URL=sqlite://web/sites/default/files/db.sqlite
-    DB_URL=sqlite://web/sites/default/files/db.sqlite
-    VITE_SERVER_ORIGIN='http://localhost:5173'
-    EOF
-  - |
     #ddev-description:Initialize the environment
     ddev start
   - echo Building front-end assets. This will take several minutes without output.
