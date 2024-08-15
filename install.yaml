@@ -5,8 +5,13 @@
 name: drupal-xb-dev
 
 pre_install_actions:
-  - ddev composer create drupal/recommended-project:^11.x-dev --no-install
-  - ddev get ddev/ddev-selenium-standalone-chrome
+  - echo Creating the Drupal project. This will take several minutes without output.
+  - |
+    #ddev-description:Create Drupal project
+    ddev composer create drupal/recommended-project:^11.x-dev --no-install
+  - |
+    #ddev-description:Install DDEV Selenium Standalone Chrome
+    ddev get ddev/ddev-selenium-standalone-chrome
 
 project_files:
   - commands/host/.xb-command-include
@@ -19,47 +24,45 @@ project_files:
 
 post_install_actions:
   - |
-    cd ../
-
-    MODULE_PATH=web/modules/contrib/experience_builder
-
+    #ddev-description:Install Drush
     # Require Drush, but don't install yet for performance reasons.
     ddev composer \
       require \
       --no-install \
       drush/drush
-
+  - |
+    #ddev-description:Place the Experience Builder module
     # Place the Experience Builder module via Git for development. Require
     # it with Composer to test its composer.json and place dependencies.
     git clone \
-    git@git.drupal.org:project/experience_builder.git \
-    $MODULE_PATH
-      ddev composer config \
+      git@git.drupal.org:project/experience_builder.git \
+      ../web/modules/contrib/experience_builder
+    ddev composer config \
       repositories.xb \
       path \
-      $MODULE_PATH
+      web/modules/contrib/experience_builder
     ddev composer require drupal/experience_builder
-
+  - |
+    #ddev-description:Install Drupal and enable the Experience Builder module
     # Install Drupal and the Experience Builder module.
     ddev xb-drush-si
-
     # Create a symlink to the module at a more convenient
     # location for editing, at the project root.
-    ln -s $MODULE_PATH experience_builder
-
-    # Set environment variables for testing.
-    cat > "$MODULE_PATH/ui/.env" << EOF
+    ln -s ../web/modules/contrib/experience_builder ../experience_builder
+    printf '\n\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' >> ../web/sites/default/settings.ddev.php
+    tail ../web/sites/default/settings.ddev.php
+  - |
+    #ddev-description:Set environment variables for testing
+    cat > "../web/modules/contrib/experience_builder/ui/.env" << EOF
     BASE_URL='http://web'
     DRUPAL_TEST_DB_URL=sqlite://web/sites/default/files/db.sqlite
     DB_URL=sqlite://web/sites/default/files/db.sqlite
     VITE_SERVER_ORIGIN='http://localhost:5173'
     EOF
-
-    # shellcheck disable=SC2016
-    echo '$settings["extension_discovery_scan_tests"] = TRUE;' >> web/sites/default/settings.ddev.php
-
-    # Initialize the environment.
+  - |
+    #ddev-description:Initialize the environment
     ddev start
-
-    # Build npm assets.
+  - echo Building front-end assets. This will take several minutes without output.
+  - |
+    #ddev-description:Build front-end assets.
     ddev xb-npm-ci
