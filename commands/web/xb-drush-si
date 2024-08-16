@@ -1,0 +1,13 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: (Re)install Drupal and the Experience Builder module.
+## Example: ddev xb-drush-si
+## Aliases: drush-si,drush:si
+
+drush site:install -y \
+  --account-name=admin \
+  --account-pass=admin \
+  --site-name="XB Local Dev"
+
+drush en -y experience_builder

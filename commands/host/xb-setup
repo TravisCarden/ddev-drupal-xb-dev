@@ -1,0 +1,78 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Set up the Experience Builder development environment.
+## Usage: xb-setup
+## Example: ddev xb-setup\nddev xb-setup --force
+## Flags: [{"Name":"force","Shorthand":"f","Usage":"Completely reset an existing environment if present and start over"}]
+## ExecRaw: true
+
+cd "$(dirname "$0")" || exit; source .xb-command-include
+
+# Flag-handling.
+while :; do
+  case ${1:-} in
+    -f | --force)
+      FORCE=true ;;
+    --)
+      shift
+      break ;;
+    -?*)
+      printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2 ;;
+    *) # Default case: No more options, so break out of the loop.
+      break ;;
+  esac
+  shift
+done
+
+# Exit early if the environment is already set up.
+if [ -d ../../../web/modules/contrib/experience_builder/.git ] && [ ! "$FORCE" ]; then
+  GREEN="\033[0;32m"
+  NO_COLOR="\033[0m"
+  printf "%bThe Experience Builder development environment is already set up.%b\n" "$GREEN" "$NO_COLOR"
+  # shellcheck disable=SC2016
+  echo 'Note: If the environment is broken, run `ddev xb-setup --force` to completely reset it and start over.'
+  echo 'Warning: If you do this, you will lose any changes you have made to the Experience Builder module or your Drupal site. Back up anything you want to save.'
+  echo Hint: ddev xb-setup --force
+  exit
+fi
+
+# Remove the Experience Builder module if it's there.
+rm -rf ../../../web/modules/contrib/experience_builder
+mkdir -p ../../../web/modules/contrib
+
+# Place the Experience Builder module via Git for development. Require
+# it with Composer to test its composer.json and place dependencies.
+git clone \
+  git@git.drupal.org:project/experience_builder.git \
+  ../../../web/modules/contrib/experience_builder
+
+# Require Drush, but don't install yet for performance reasons.
+ddev composer \
+  require \
+  --no-install \
+  drush/drush
+
+ddev composer config \
+  repositories.xb \
+  path \
+  web/modules/contrib/experience_builder
+ddev composer require drupal/experience_builder
+
+# Install Drupal and enable the Experience Builder module
+ddev xb-drush-si
+# Create a symlink to the module at a more convenient
+# location for editing, at the project root.
+ln -s ../web/modules/contrib/experience_builder ../experience_builder || true
+# shellcheck disable=SC2016
+printf '\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' \
+  >> ../../../web/sites/default/settings.ddev.php
+
+# Initialize the environment.
+ddev start
+
+# Build front-end assets.
+ddev xb-npm-ci
+
+# Install DDEV Selenium Standalone Chrome
+ddev get ddev/ddev-selenium-standalone-chrome

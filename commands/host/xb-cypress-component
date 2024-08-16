@@ -1,0 +1,13 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Run Experience Builder's Cypress component/unit tests.
+## Usage: xb-cypress-component
+## Example: ddev xb-cypress-component                     Run all tests.\nddev xb-cypress-component --env "VAR=value"   Pass arbitrary command arguments.
+## Aliases: cy-component,cy:component
+## OSTypes: darwin
+## ExecRaw: true
+
+cd "$(dirname "$0")" || exit; source .xb-command-include
+
+xb_cypress "run --component $*"

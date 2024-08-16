@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# #ddev-generated
+# NAME
+#     .xb-command-include - Include reusable code.
+#
+# SYNOPSIS
+#     cd "$(dirname "$0")" || exit; source .xb-command-include
+#
+# DESCRIPTION
+#     Includes common features used by XB commands.
+
+# Exit as soon as one command returns a non-zero exit code.
+set -e
+
+# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
+
+# Fails if XQuartz is not installed.
+function assert_xquartz_is_installed {
+  if ! open -Ra XQuartz ; then
+    echo Cannot find XQuartz. Install it and try again.
+    echo Hint: https://github.com/TravisCarden/ddev-drupal-xb-dev#xquartz
+    exit 1
+  fi
+}
+
+# Ensures that XQuartz is configured and running.
+function ensure_xquartz {
+  if ! pgrep -x Xquartz &> /dev/null; then
+    # Run XQuartz and give it a moment to start up.
+    open -a XQuartz
+    sleep 2
+  fi
+  # Add the host IP to the allowed X11 hosts.
+  xhost +
+}
+
+# Runs a given Cypress command, e.g., `xb_cypress run --e2e`.
+function xb_cypress {
+  assert_xquartz_is_installed
+  ensure_xquartz
+  ddev exec \
+    --dir /var/www/html/web/modules/contrib/experience_builder/ui \
+    "node_modules/.bin/cypress $1"
+}

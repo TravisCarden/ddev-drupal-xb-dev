@@ -1,7 +1,11 @@
 #ddev-generated
 web_environment:
+  - BASE_URL=http://web
   - CYPRESS_CACHE_FOLDER=/var/www/html/.cache/cypress
+  - DB_URL=sqlite://web/sites/default/files/db.sqlite
   - DISPLAY=host.docker.internal:0
+  - DRUPAL_TEST_DB_URL=sqlite://web/sites/default/files/db.sqlite
+  - VITE_SERVER_ORIGIN=http://localhost:5173
 webimage_extra_packages:
   - libasound2
   - libgbm-dev

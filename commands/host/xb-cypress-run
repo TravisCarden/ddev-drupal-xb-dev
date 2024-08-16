@@ -1,49 +1,13 @@
 #!/bin/bash
 
 ## #ddev-generated
-## Description: Run Experience Builder's Cypress tests.
-## Usage: xb-cypress-run [--spec spec-pattern]
-## Example: ddev xb-cypress-run                              Run all tests.\nddev xb-cypress-run --spec "e2e/*.cy.js"         Run all end-to-end tests.\nddev xb-cypress-run --spec "e2e/example.cy.js"   Run a specific test.
+## Description: Run Experience Builder's Cypress tests headlessly.
+## Usage: xb-cypress-run
+## Example: ddev xb-cypress-run                     Run all tests.\nddev xb-cypress-run --env "VAR=value"   Pass arbitrary command arguments.
 ## Aliases: cy-run,cy:run
-## Flags: [{"Name":"spec","Shorthand":"s","Usage":"run specific spec (files) relative to web/modules/contrib/experience_builder/tests/src/Cypress/cypress","Type":"string","DefValue":"**/*.cy.{js,ts,jsx,tsx}"}]
 ## OSTypes: darwin
 ## ExecRaw: true
 
-# Run all tests by default.
-SPEC_PATTERN="**/*.cy.{js,ts,jsx,tsx}"
+cd "$(dirname "$0")" || exit; source .xb-command-include
 
-# Flag-handling.
-while :; do
-  case ${1:-} in
-
-  # Options.
-  -s | --spec)
-    SPEC_PATTERN="$2" ;;
-
-  --) # End of options.
-    shift
-    break ;;
-  -?*)
-    printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2 ;;
-  *) # Default case: No more options, so break out of the loop.
-    break ;;
-  esac
-  shift
-done
-
-# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
-# TODO: Check for the presence of XQuartz and instruct the user to install it and try again if not.
-
-# xhost below should open XQuartz automatically, but just to be sure...
-open -a XQuartz
-
-# Give XQuartz a moment to start up.
-sleep 2
-
-# Add the host IP to the allowed X11 hosts and run XQuartz.
-xhost +
-
-# Run Cypress.
-ddev exec \
-  --dir /var/www/html/web/modules/contrib/experience_builder/ui \
-  "node_modules/.bin/cypress run --browser electron --spec '../tests/src/Cypress/cypress/${SPEC_PATTERN}'"
+xb_cypress "run --browser electron $*"
