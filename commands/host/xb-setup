@@ -8,6 +8,7 @@
 ## ExecRaw: true
 
 cd "$(dirname "$0")" || exit; source .xb-command-include
+cd ../../../
 
 # Flag-handling.
 while :; do
@@ -26,7 +27,7 @@ while :; do
 done
 
 # Exit early if the environment is already set up.
-if [ -d ../../../web/modules/contrib/experience_builder/.git ] && [ ! "$FORCE" ]; then
+if [ -d web/modules/contrib/experience_builder/.git ] && [ ! "$FORCE" ]; then
   GREEN="\033[0;32m"
   NO_COLOR="\033[0m"
   printf "%bThe Experience Builder development environment is already set up.%b\n" "$GREEN" "$NO_COLOR"
@@ -38,14 +39,14 @@ if [ -d ../../../web/modules/contrib/experience_builder/.git ] && [ ! "$FORCE" ]
 fi
 
 # Remove the Experience Builder module if it's there.
-rm -rf ../../../web/modules/contrib/experience_builder
-mkdir -p ../../../web/modules/contrib
+rm -rf web/modules/contrib/experience_builder
+mkdir -p web/modules/contrib
 
 # Place the Experience Builder module via Git for development. Require
 # it with Composer to test its composer.json and place dependencies.
 git clone \
   git@git.drupal.org:project/experience_builder.git \
-  ../../../web/modules/contrib/experience_builder
+  web/modules/contrib/experience_builder
 
 # Require Drush, but don't install yet for performance reasons.
 ddev composer \
@@ -63,7 +64,7 @@ ddev composer require drupal/experience_builder
 ddev xb-drush-si
 # Create a symlink to the module at a more convenient
 # location for editing, at the project root.
-ln -s ../web/modules/contrib/experience_builder ../experience_builder || true
+ln -s web/modules/contrib/experience_builder experience_builder || true
 
 # Initialize the environment.
 ddev start
@@ -71,7 +72,7 @@ ddev start
 # Allow test modules and themes to be installed.
 # shellcheck disable=SC2016
 printf '\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' \
-  >> ../../../web/sites/default/settings.ddev.php
+  >> web/sites/default/settings.ddev.php
 
 # Build front-end assets.
 ddev xb-npm-ci
