@@ -20,7 +20,7 @@ These instructions create a new project from scratch. The add-on cannot be added
 Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 
 ### Docker provider
-This has been successfully tested with Orbstack, Colima, and Docker Desktop. Colima and Docker Desktop work out-of-the-box. Orbstack requires one change:
+This has been successfully tested with Orbstack, Colima, Rancher Desktop, and Docker Desktop. Colima and Docker Desktop work out-of-the-box. Orbstack and Rancher Desktop each require an extra step:
 
 #### Orbstack
 
@@ -29,6 +29,15 @@ Override the default `$DISPLAY` environment variable in the container by adding 
 ```yaml
 web_environment:
   - DISPLAY=host.orb.internal:0
+```
+
+#### Rancher Desktop
+
+Override the default `$DISPLAY` environment variable in the container by adding the following to your `.ddev/config.yaml` file:
+
+```yaml
+web_environment:
+  - DISPLAY=host.rancher-desktop.internal:0
 ```
 
 ### XQuartz
@@ -149,7 +158,7 @@ No, not currently; and there are no plans at present to support it. See [Support
 If you get an error like the below when attempting to run Cypress on macOS...
 
 - Confirm that you have carefully followed _all_ the instructions under [Cypress](#cypress).
-- If you're using Orbstack, take [the special steps outlined above](#orbstack).
+- See if your [Docker provider](#docker-provider) above requires any special configuration.
 
 If these don't resolve the issue, see [Support & community](#support--community) above.
 
