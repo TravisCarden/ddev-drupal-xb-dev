@@ -57,7 +57,7 @@ ddev get ../../
 ddev xb-setup
 
 # Simulate a broken setup and make sure the setup command aborts.
-ddev exec "rm -rf web/modules/contrib/experience_builder"
+rm -rf web/modules/contrib/experience_builder
 ddev xb-setup
 
 # Make sure the setup command works on a broken setup when forced.
