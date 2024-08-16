@@ -64,12 +64,14 @@ ddev xb-drush-si
 # Create a symlink to the module at a more convenient
 # location for editing, at the project root.
 ln -s ../web/modules/contrib/experience_builder ../experience_builder || true
-# shellcheck disable=SC2016
-printf '\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' \
-  >> ../../../web/sites/default/settings.ddev.php
 
 # Initialize the environment.
 ddev start
+
+# Allow test modules and themes to be installed.
+# shellcheck disable=SC2016
+printf '\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' \
+  >> ../../../web/sites/default/settings.ddev.php
 
 # Build front-end assets.
 ddev xb-npm-ci
