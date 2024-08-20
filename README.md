@@ -182,3 +182,15 @@ Cypress Version: 13.12.0
 Failed to execute command node_modules/.bin/cypress open --browser electron --project .: exit status 1
 Failed to run xb-cypress-open ; error=exit status 1
 ```
+
+### What if I get an HTTPS error?
+
+If this is your first time using DDEV, you may get an error like the following when you try to visit your site. If so, you need to configure your OS and browser to trust the root certificate authority that DDEV uses. See [DDEV Installation](https://ddev.readthedocs.io/en/stable/users/install/ddev-installation/).
+
+```
+This site can't be reached
+
+The webpage at https://example.com/ might be temporarily down or it may have moved permanently to a new web address.
+
+ERR_SSL_UNRECOGNIZED_NAME_ALERT
+```
