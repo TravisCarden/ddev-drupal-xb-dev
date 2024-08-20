@@ -75,7 +75,7 @@ printf '\n# Allow test modules and themes to be installed.\n$settings["extension
   >> web/sites/default/settings.ddev.php
 
 # Build front-end assets.
-ddev xb-npm-ci
+ddev xb-npm-build
 
 # Install DDEV Selenium Standalone Chrome
 ddev get ddev/ddev-selenium-standalone-chrome

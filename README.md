@@ -20,7 +20,7 @@ These instructions create a new project from scratch. The add-on cannot be added
 Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 
 ### Docker provider
-This has been successfully tested with Orbstack, Colima, and Docker Desktop. Colima and Docker Desktop work out-of-the-box. Orbstack requires one change:
+This has been successfully tested with Orbstack, Colima, Rancher Desktop, and Docker Desktop. Colima and Docker Desktop work out-of-the-box. Orbstack and Rancher Desktop each require an extra step:
 
 #### Orbstack
 
@@ -29,6 +29,15 @@ Override the default `$DISPLAY` environment variable in the container by adding 
 ```yaml
 web_environment:
   - DISPLAY=host.orb.internal:0
+```
+
+#### Rancher Desktop
+
+Override the default `$DISPLAY` environment variable in the container by adding the following to your `.ddev/config.yaml` file:
+
+```yaml
+web_environment:
+  - DISPLAY=host.rancher-desktop.internal:0
 ```
 
 ### XQuartz
@@ -94,10 +103,10 @@ To log into Drupal, run:
 ddev drush uli
 ```
 
-To clean-install the module's UI app, i.e., rebuild its front-end assets, run the following. Do this whenever you pull upstream changes to the module.
+To clean-install and build the module's UI app assets, run the following. Do this whenever you pull upstream changes to the module.
 
 ```shell
-ddev xb-npm-ci
+ddev xb-npm-build
 ```
 
 To completely reinstall Drupal and the Experience Builder module, run:
@@ -149,7 +158,7 @@ No, not currently; and there are no plans at present to support it. See [Support
 If you get an error like the below when attempting to run Cypress on macOS...
 
 - Confirm that you have carefully followed _all_ the instructions under [Cypress](#cypress).
-- If you're using Orbstack, take [the special steps outlined above](#orbstack).
+- See if your [Docker provider](#docker-provider) above requires any special configuration.
 
 If these don't resolve the issue, see [Support & community](#support--community) above.
 
@@ -172,4 +181,16 @@ Platform: linux-arm64 (Debian - 12)
 Cypress Version: 13.12.0
 Failed to execute command node_modules/.bin/cypress open --browser electron --project .: exit status 1
 Failed to run xb-cypress-open ; error=exit status 1
+```
+
+### What if I get an HTTPS error?
+
+If this is your first time using DDEV, you may get an error like the following when you try to visit your site. If so, you need to configure your OS and browser to trust the root certificate authority that DDEV uses. See [DDEV Installation](https://ddev.readthedocs.io/en/stable/users/install/ddev-installation/).
+
+```
+This site can't be reached
+
+The webpage at https://example.com/ might be temporarily down or it may have moved permanently to a new web address.
+
+ERR_SSL_UNRECOGNIZED_NAME_ALERT
 ```

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Clean-install and build Experience Builder's UI app assets.
+## Example: ddev xb-npm-build
+## Aliases: npm-build,npm:build
+
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
+
+npm ci
+npm run build
