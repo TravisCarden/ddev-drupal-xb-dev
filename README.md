@@ -103,10 +103,10 @@ To log into Drupal, run:
 ddev drush uli
 ```
 
-To clean-install the module's UI app, i.e., rebuild its front-end assets, run the following. Do this whenever you pull upstream changes to the module.
+To clean-install and build the module's UI app assets, run the following. Do this whenever you pull upstream changes to the module.
 
 ```shell
-ddev xb-npm-ci
+ddev xb-npm-build
 ```
 
 To completely reinstall Drupal and the Experience Builder module, run:

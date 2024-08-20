@@ -13,7 +13,7 @@
 # Exit as soon as one command returns a non-zero exit code.
 set -e
 
-# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-ci` and try again if not.
+# TODO: Check for the presence of Cypress and instruct the user to run `ddev xb-npm-build` and try again if not.
 
 # Fails if XQuartz is not installed.
 function assert_xquartz_is_installed {
