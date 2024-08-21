@@ -1,0 +1,14 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Check Experience Builder code for standards compliance with PHPCS.
+## Example: ddev xb-phpcs
+## Aliases: phpcs,cs
+
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT" || exit 1
+
+../vendor/bin/phpcs \
+  -s \
+  --standard=modules/contrib/experience_builder/phpcs.xml \
+  --basepath=modules/contrib/experience_builder \
+  modules/contrib/experience_builder

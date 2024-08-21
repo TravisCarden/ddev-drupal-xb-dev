@@ -1,0 +1,14 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Analyze Experience Builder code to find bugs with PHPStan.
+## Example: ddev xb-phpstan
+## Aliases: phpstan,stan
+
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT" || exit 1
+
+../vendor/bin/phpstan \
+  analyze \
+  --configuration=modules/contrib/experience_builder/phpstan.neon \
+  --memory-limit=256M \
+  modules/contrib/experience_builder
