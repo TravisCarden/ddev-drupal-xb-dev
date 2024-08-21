@@ -13,6 +13,7 @@ project_files:
   - commands/web/xb-drush-si
   - commands/web/xb-npm-build
   - commands/web/xb-phpcs
+  - commands/web/xb-phpstan
   - config.drupal-xb-dev.yaml
 
 post_install_actions:
