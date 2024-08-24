@@ -73,9 +73,6 @@ ddev composer require \
 
 # Install Drupal and enable the Experience Builder module
 ddev xb-drush-si
-# Create a symlink to the module at a more convenient
-# location for editing, at the project root.
-ln -s web/modules/contrib/experience_builder experience_builder || true
 
 # Initialize the environment.
 ddev start
