@@ -20,7 +20,7 @@ These instructions create a new project from scratch. The add-on cannot be added
 Obviously, this requires a working [DDEV](https://ddev.com/) installation.
 
 ### Docker provider
-This has been successfully tested with Orbstack, Colima, Rancher Desktop, and Docker Desktop. Colima and Docker Desktop work out-of-the-box.
+This has been successfully tested with Orbstack, Colima, Rancher Desktop, and Docker Desktop.
 
 ### XQuartz
 
