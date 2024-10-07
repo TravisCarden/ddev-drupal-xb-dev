@@ -15,6 +15,7 @@ project_files:
   - commands/web/xb-phpcbf
   - commands/web/xb-phpcs
   - commands/web/xb-phpstan
+  - commands/web/xb-phpunit
   - config.drupal-xb-dev.yaml
 
 post_install_actions:

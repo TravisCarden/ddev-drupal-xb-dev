@@ -97,7 +97,35 @@ To completely reinstall Drupal and the Experience Builder module, run:
 ddev xb-drush-si
 ```
 
-### Cypress
+### Testing
+
+Many of the standard development tools are available: PHPCS, PHPStan, PHPUnit, and Cypress. (Others, such a ESLint and Stylelint, would be welcome contributions.)
+
+PHP Code Sniffer:
+
+```shell
+ddev xb-phpcs
+```
+
+PHP Code Beautifier and Fixer:
+
+```shell
+ddev xb-phpcbf
+```
+
+PHPStan:
+
+```shell
+ddev xb-phpstan
+```
+
+PHPUnit:
+
+```shell
+ddev xb-phpunit
+```
+
+#### Cypress
 
 Cypress testing is currently only supported on macOS. Make sure you have installed and carefully configured XQuartz per [the instructions above](#xquartz).
 
