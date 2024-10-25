@@ -113,6 +113,12 @@ PHP Code Beautifier and Fixer:
 ddev xb-phpcbf
 ```
 
+ESlint:
+
+```shell
+ddev xb-eslint
+```
+
 PHPStan:
 
 ```shell

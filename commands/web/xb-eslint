@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Check Experience Builder code for standards compliance with PHPCS.
+## Example: ddev xb-eslint
+## Aliases: eslint
+
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
+
+npm run lint:eslint

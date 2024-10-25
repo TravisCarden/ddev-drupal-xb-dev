@@ -56,6 +56,16 @@ ddev get ../../
 # Try to perform one-time setup operations when they've already been done.
 ddev xb-setup
 
+# Make sure all the commands get installed.
+DDEV_HELP_OUTPUT=$(ddev help)
+for COMMAND_NAME in $(find "$(dirname "$0")/../commands" -name 'xb-*' -exec basename {} \;); do
+  if ! echo "$DDEV_HELP_OUTPUT" | grep -q "$COMMAND_NAME"; then
+    echo "Error: $COMMAND_NAME is not installed."
+    exit 1
+  fi
+done
+echo "All commands are installed."
+
 # Simulate a broken setup and make sure the setup command aborts.
 rm -rf web/modules/contrib/experience_builder
 ddev xb-setup
