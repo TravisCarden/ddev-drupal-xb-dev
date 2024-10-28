@@ -101,6 +101,12 @@ ddev xb-drush-si
 
 Many of the standard development tools are available: PHPCS, PHPStan, PHPUnit, and Cypress. (Others, such a ESLint and Stylelint, would be welcome contributions.)
 
+ESlint:
+
+```shell
+ddev xb-eslint
+```
+
 PHP Code Sniffer:
 
 ```shell
@@ -113,12 +119,6 @@ PHP Code Beautifier and Fixer:
 ddev xb-phpcbf
 ```
 
-ESlint:
-
-```shell
-ddev xb-eslint
-```
-
 PHPStan:
 
 ```shell
@@ -129,6 +129,18 @@ PHPUnit:
 
 ```shell
 ddev xb-phpunit
+```
+
+Stylelint:
+
+```shell
+ddev xb-stylelint
+```
+
+Stylelint fixer:
+
+```shell
+ddev xb-stylelint-fix
 ```
 
 #### Cypress
