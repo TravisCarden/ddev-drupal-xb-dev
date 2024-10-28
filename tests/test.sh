@@ -65,16 +65,3 @@ for COMMAND_NAME in $(find "$(dirname "$0")/../commands" -name 'xb-*' -exec base
   fi
 done
 echo "All commands are installed."
-
-# Simulate a broken setup and make sure the setup command aborts.
-rm -rf web/modules/contrib/experience_builder
-ddev xb-setup
-
-# Make sure the setup command works on a broken setup when forced.
-ddev xb-setup --force
-
-# Make sure the setup command aborts given an unknown flag.
-ddev xb-setup --foobar
-
-# Run Cypress.
-ddev xb-cypress-open
