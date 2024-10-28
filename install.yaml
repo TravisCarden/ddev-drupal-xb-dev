@@ -17,6 +17,8 @@ project_files:
   - commands/web/xb-phpcs
   - commands/web/xb-phpstan
   - commands/web/xb-phpunit
+  - commands/web/xb-stylelint
+  - commands/web/xb-stylelint-fix
   - config.drupal-xb-dev.yaml
 
 post_install_actions:
