@@ -11,3 +11,5 @@ drush site:install -y \
   --site-name="XB Local Dev"
 
 drush en -y experience_builder
+
+drush uli
