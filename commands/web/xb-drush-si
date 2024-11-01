@@ -5,11 +5,14 @@
 ## Example: ddev xb-drush-si
 ## Aliases: drush-si,drush:si
 
+# Install Drupal.
 drush site:install -y \
   --account-name=admin \
   --account-pass=admin \
   --site-name="XB Local Dev"
 
+# Enable the Experience Builder module.
 drush en -y experience_builder
 
+# Display a one time login link for user ID 1.
 drush uli
