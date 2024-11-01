@@ -16,7 +16,7 @@ CYPRESS_BIN="$(dirname "$0")/../../../web/modules/contrib/experience_builder/ui/
 
 # Check for the presence of Cypress.
 if ! command -v "$CYPRESS_BIN" &>/dev/null; then
-  echo "Cypress is not installed. Please run 'ddev xb-npm-build' and try again."
+  echo "Cypress is not installed. Run 'ddev xb-ui-build' and try again."
   exit 1
 fi
 

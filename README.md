@@ -46,7 +46,7 @@ The installation process clones [the Experience Builder module](https://www.drup
 Any time you update the Experience Builder module or modify its front-end code, be sure to rebuild the UI app assets:
 
 ```shell
-ddev npm-build
+ddev ui-build
 ```
 
 To completely reinstall Drupal and the Experience Builder module, run:
