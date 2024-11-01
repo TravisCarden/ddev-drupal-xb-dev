@@ -1,8 +1,6 @@
 # DDEV Drupal Experience Builder Development Environment
 
-This creates and configures a DDEV project for local Drupal [Experience Builder](https://www.drupal.org/project/experience_builder) (XB) module development. Specifically, it creates a Drupal site, clones and installs the module, sets up the front-end dependencies, and provides Cypress JavaScript testing functionality.
-
-These instructions create a new project from scratch. The add-on cannot be added to an existing DDEV project. It _can_ be updated in the usual way by simply running `ddev get TravisCarden/ddev-drupal-xb-dev`.
+This creates and configures a DDEV project for local Drupal [Experience Builder](https://www.drupal.org/project/experience_builder) (XB) module development. Specifically, it creates a Drupal site, clones and installs the module, sets up the front-end dependencies, and provides specialized development and testing tools.
 
 >  **Notice:** This add-on is experimental. See [Support & community](#support--community) below.
 
@@ -10,39 +8,13 @@ These instructions create a new project from scratch. The add-on cannot be added
 - [Installation](#installation)
 - [Usage](#usage)
 - [Updating](#updating)
+- [Cypress](#cypress)
 - [Support & community](#support--community)
 - [FAQ & known issues](#faq--known-issues)
 
 ## Requirements
 
-### DDEV
-
-Obviously, this requires a working [DDEV](https://ddev.com/) installation.
-
-### Docker provider
-This has been successfully tested with Orbstack, Colima, Rancher Desktop, and Docker Desktop.
-
-### XQuartz
-
-The XQuartz X Window System is required for Cypress testing on macOS. You can skip this step if you do not intend to run Cypress--if you only plan to do backend development or user testing, for example. You can return to it later if you change your mind.
-
-> **Note:** Carefully follow the below Cypress configuration steps after installing it. Failure to do so will result in frustrating, difficult to debug problems.
-
-Install Cypress using Homebrew. See also https://www.xquartz.org/.
-
-```shell
-brew install xquartz
-```
-
-Configure XQuartz to allow connections from the host:
-
-- Open XQuartz.
-- Open Preferences ("XQuartz" > "Settings..." from the menu or `⌘,`).
-- Go to the "Security" tab.
-- Check the "Allow connections from network clients" checkbox.
-- Log out and back in or restart your machine for the change to take effect.
-
-![XQuartz Preferences dialog](resources/xquartz-settings.png)
+Obviously, this requires a working [DDEV](https://ddev.com/) installation. It has been successfully tested with Orbstack, Colima, Rancher Desktop, and Docker Desktop.
 
 ## Installation
 
@@ -71,83 +43,55 @@ The resulting DDEV project is just like any other one. Interact with it using th
 
 The installation process clones [the Experience Builder module](https://www.drupal.org/project/experience_builder) into `web/modules/contrib/experience_builder`. Develop and contribute from either location like you would any other Git repo for a normal Drupal project.
 
-### Browsing and development
-
-To browse the site, run:
+Any time you update the Experience Builder module or modify its front-end code, be sure to rebuild the UI app assets:
 
 ```shell
-ddev launch
-```
-
-To log into Drupal, run:
-
-```shell
-ddev drush uli
-```
-
-To clean-install and build the module's UI app assets, run the following. Do this whenever you pull upstream changes to the module.
-
-```shell
-ddev xb-npm-build
+ddev npm-build
 ```
 
 To completely reinstall Drupal and the Experience Builder module, run:
 
 ```shell
-ddev xb-site-install
+ddev site-install
 ```
 
-### Testing
-
-Many of the standard development tools are available: PHPCS, PHPStan, PHPUnit, and Cypress. (Others, such a ESLint and Stylelint, would be welcome contributions.)
-
-ESlint:
+For the full list of available Experience Builder commands, run this:
 
 ```shell
-ddev xb-eslint
+ddev | grep xb-
 ```
 
-PHP Code Sniffer:
+## Updating
+
+Update the Experience Builder module clone just like you would any other Git repo. No tools are currently provided for updating Core.
+
+## Cypress
+
+Experience Builder uses [Cypress](https://www.cypress.io/) for front-end testing. It is currently only supported on macOS.
+
+### Setup
+
+> Carefully follow the below XQuartz configuration steps after installing it. Failure to do so will result in frustrating, difficult to debug problems.
+
+Install XQuartz using Homebrew. See also https://www.xquartz.org/.
 
 ```shell
-ddev xb-phpcs
+brew install xquartz
 ```
 
-PHP Code Beautifier and Fixer:
+Configure XQuartz to allow connections from the host:
 
-```shell
-ddev xb-phpcbf
-```
+- Open XQuartz.
+- Open Preferences ("XQuartz" > "Settings..." from the menu or `⌘,`).
+- Go to the "Security" tab.
+- Check the "Allow connections from network clients" checkbox.
+- Log out and back in or restart your machine for the change to take effect.
 
-PHPStan:
+![XQuartz Preferences dialog](resources/xquartz-settings.png)
 
-```shell
-ddev xb-phpstan
-```
+### Usage
 
-PHPUnit:
-
-```shell
-ddev xb-phpunit
-```
-
-Stylelint:
-
-```shell
-ddev xb-stylelint
-```
-
-Stylelint fixer:
-
-```shell
-ddev xb-stylelint-fix
-```
-
-#### Cypress
-
-Cypress testing is currently only supported on macOS. Make sure you have installed and carefully configured XQuartz per [the instructions above](#xquartz).
-
-Run tests interactively:
+Run Cypress tests interactively:
 
 ```shell
 ddev xb-cypress-open
@@ -164,10 +108,6 @@ Run component/unit tests:
 ```shell
 ddev xb-cypress-component
 ```
-
-## Updating
-
-Update the XB module clone just like you would any other Git repo. No tools are currently provided for updating Core or reinstalling the site.
 
 ## Support & community
 
@@ -218,7 +158,7 @@ If this is your first time using DDEV, you may get an error like the following w
 ```
 This site can't be reached
 
-The webpage at https://example.com/ might be temporarily down or it may have moved permanently to a new web address.
+The webpage at https://xb-dev.ddev.site/ might be temporarily down or it may have moved permanently to a new web address.
 
 ERR_SSL_UNRECOGNIZED_NAME_ALERT
 ```
