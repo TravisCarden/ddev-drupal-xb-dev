@@ -94,19 +94,19 @@ Configure XQuartz to allow connections from the host:
 Run Cypress tests interactively:
 
 ```shell
-ddev xb-cypress open
+ddev cypress open
 ```
 
 Run them headlessly:
 
 ```shell
-ddev xb-cypress run
+ddev cypress run
 ```
 
 Run component/unit tests:
 
 ```shell
-ddev xb-cypress component
+ddev cypress component
 ```
 
 ## Support & community
