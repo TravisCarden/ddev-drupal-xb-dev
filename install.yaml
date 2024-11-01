@@ -14,7 +14,6 @@ project_files:
   - commands/web/xb-autosave
   - commands/web/xb-eslint
   - commands/web/xb-npm-build
-  - commands/web/xb-phpcbf
   - commands/web/xb-phpcs
   - commands/web/xb-phpstan
   - commands/web/xb-phpunit
