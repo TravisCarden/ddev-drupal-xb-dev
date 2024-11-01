@@ -10,12 +10,12 @@ project_files:
   - commands/host/xb-static
   - commands/web/xb-autosave
   - commands/web/xb-eslint
-  - commands/web/xb-npm-build
   - commands/web/xb-phpcs
   - commands/web/xb-phpstan
   - commands/web/xb-phpunit
   - commands/web/xb-site-install
   - commands/web/xb-stylelint
+  - commands/web/xb-ui-build
   - config.drupal-xb-dev.yaml
 
 post_install_actions:

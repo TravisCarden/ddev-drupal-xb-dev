@@ -86,7 +86,7 @@ printf '\n# Allow test modules and themes to be installed.\n$settings["extension
 ddev exec --dir /var/www/html/web/core -- npm install
 
 # Build front-end assets.
-ddev xb-npm-build
+ddev xb-ui-build
 
 # Install DDEV Selenium Standalone Chrome
 ddev get ddev/ddev-selenium-standalone-chrome
