@@ -2,9 +2,22 @@
 
 ## #ddev-generated
 ## Description: Find problems in JavaScript code with ESLint.
-## Example: ddev xb-eslint
-## Aliases: eslint
+## Usage: xb-eslint [fix]
+## Example: ddev eslint      # Check for errors.\nddev eslint fix  # Fix errors where possible.
+## Aliases: eslint,js
+## ExecRaw: false
+## Flags: []
+## AutocompleteTerms: ["fix"]
 
 cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
 
-npm run lint:eslint
+# TODO: Suppress "WARNING: You are currently running a version of TypeScript which is not officially supported by @typescript-eslint/typescript-estree."
+
+case "$1" in
+  "fix") npm run lint:fix ;;
+  "") npm run lint:eslint ;;
+  *)
+    echo "Invalid argument: $1"
+    exit 1
+    ;;
+esac
