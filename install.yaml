@@ -10,6 +10,7 @@ project_files:
   - commands/host/xb-cypress-open
   - commands/host/xb-cypress-run
   - commands/host/xb-setup
+  - commands/host/xb-static
   - commands/web/xb-autosave
   - commands/web/xb-eslint
   - commands/web/xb-npm-build
