@@ -1,0 +1,63 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Enable, disable, or clear auto-save
+## Usage: xb-autosave on|off|enable|disable|true|false|toggle|status|clear
+## Example: ddev autosave         # Enable auto-save.\nddev autosave on      # Enable auto-save.\nddev autosave off     # Disable auto-save.\nddev autosave toggle  # Toggle auto-save status.\nddev autosave status  # Get auto-save status.\nddev autosave clear   # Clear all auto-saves.
+## Aliases: autosave,as
+## ExecRaw: false
+## Flags: []
+## AutocompleteTerms: ["on","off","enable","disable","toggle","status","clear"]
+
+enable_autosave() {
+  drush state:delete experience_builder.disable_auto-save
+}
+
+disable_autosave() {
+  drush state:set experience_builder.disable_auto-save 1
+}
+
+if [ $# -eq 0 ] ; then
+  enable_autosave
+  exit
+fi
+
+get_autosave_status() {
+  if [ "$(drush state:get experience_builder.disable_auto-save)" = "1" ]; then
+    echo "0"
+  else
+    echo "1"
+  fi
+}
+
+case $1 in
+  on|true|enable)
+    enable_autosave
+    ;;
+  off|false|disable)
+    disable_autosave
+    ;;
+  toggle)
+    if [ "$(get_autosave_status)" = "1" ]; then
+      disable_autosave
+    else
+      enable_autosave
+    fi
+    ;;
+  status)
+    if [ "$(get_autosave_status)" = "1" ]; then
+      echo "autosave enabled"
+    else
+      echo "autosave disabled"
+    fi
+    ;;
+  clear)
+    drush \
+      sql:query \
+      "delete from key_value_expire where collection='tempstore.shared.experience_builder.auto_save'" \
+      > /dev/null
+    ;;
+  *)
+    echo "Invalid argument: $1"
+    ;;
+esac
