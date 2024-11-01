@@ -11,7 +11,8 @@
 
 cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
 
-# TODO: Suppress "WARNING: You are currently running a version of TypeScript which is not officially supported by @typescript-eslint/typescript-estree."
+# @todo: Suppress "WARNING: You are currently running a version of TypeScript which is not officially supported by @typescript-eslint/typescript-estree."
+# @see https://www.drupal.org/project/experience_builder/issues/3485146
 
 case "$1" in
   "fix") npm run lint:fix ;;
