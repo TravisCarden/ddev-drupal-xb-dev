@@ -1,0 +1,63 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Run Cypress tests.
+## Usage: xb-cypress open|run|component
+## Example: ddev xb-cypress open                       # Run end-to-end tests in interactive mode.\nddev xb-cypress run                        # Run all tests headlessly.\nddev xb-cypress component                  # Run component/unit tests.\nddev xb-cypress open -- --env "VAR=value"  # Pass arbitrary command arguments.
+## Aliases: cypress,cy
+## Flags: []
+## AutocompleteTerms: ["component","open","run"]
+## OSTypes: darwin
+## ExecRaw: true
+
+cd "$(dirname "$0")" || exit 1
+
+CYPRESS_BIN="$(dirname "$0")/../../../web/modules/contrib/experience_builder/ui/node_modules/.bin/cypress"
+
+# Check for the presence of Cypress.
+if ! command -v "$CYPRESS_BIN" &>/dev/null; then
+  echo "Cypress is not installed. Please run 'ddev xb-npm-build' and try again."
+  exit 1
+fi
+
+# Check if XQuartz is installed and running.
+if ! open -Ra XQuartz; then
+  echo "Cannot find XQuartz. Install it and try again."
+  echo "Hint: https://github.com/TravisCarden/ddev-drupal-xb-dev#cypress"
+  exit 1
+fi
+
+# Start XQuartz if it isn't running.
+if ! pgrep -x Xquartz &>/dev/null; then
+  open -a XQuartz
+  # Give it a moment to start up.
+  sleep 2
+fi
+
+# Open up the allowed X11 hosts.
+xhost +
+
+# Runs a given Cypress command, e.g., `xb_cypress run --e2e`.
+function xb_cypress {
+  ddev exec \
+    --dir /var/www/html/web/modules/contrib/experience_builder/ui \
+    "$CYPRESS_BIN $1"
+}
+
+# Remove "--", if present, or it gets treated as the command argument.
+if [[ "$1" == "--" ]]; then
+  shift
+fi
+
+# Use the first argument as the command or default to "open".
+COMMAND="${1:-open}"
+
+# Shift to process remaining arguments.
+shift
+
+case "$COMMAND" in
+  open) xb_cypress "open --browser electron $*" ;;
+  run) xb_cypress "run --browser electron $*" ;;
+  component) xb_cypress "run --component $*" ;;
+  *) echo "Invalid argument: $1" >&2; exit 1 ;;
+esac
