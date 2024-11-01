@@ -14,5 +14,8 @@ drush site:install -y \
 # Enable the Experience Builder module.
 drush en -y experience_builder
 
+# Create a default article.
+drush php:eval "(\Drupal\node\Entity\Node::create(['type' => 'article', 'title' => 'Test', 'uid' => 1]))->save();"
+
 # Display a one time login link for user ID 1.
 drush uli
