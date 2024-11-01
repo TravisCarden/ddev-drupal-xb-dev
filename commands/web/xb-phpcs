@@ -2,12 +2,24 @@
 
 ## #ddev-generated
 ## Description: Check for standards compliance with PHPCS.
-## Example: ddev xb-phpcs
+## Usage: xb-phpcs [fix]
+## Example: ddev phpcs      # Check for errors.\nddev phpcs fix  # Fix errors where possible
 ## Aliases: phpcs,cs
+## ExecRaw: false
+## Flags: []
+## AutocompleteTerms: ["fix"]
 
 cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT" || exit 1
 
-../vendor/bin/phpcs \
+COMMAND="phpcs"
+if [[ $1 == "fix" ]]; then
+  COMMAND="phpcbf"
+elif [[ -n $1 ]]; then
+  echo "Invalid argument: $1"
+  exit 1
+fi
+
+"../vendor/bin/$COMMAND" \
   -s \
   --standard=modules/contrib/experience_builder/phpcs.xml \
   --basepath=modules/contrib/experience_builder \
