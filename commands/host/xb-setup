@@ -71,7 +71,7 @@ ddev composer require \
   league/openapi-psr7-validator \
   webflo/drupal-finder
 
-# Install Drupal and enable the Experience Builder module
+# Install Drupal and enable the Experience Builder module.
 ddev xb-site-install
 
 # Initialize the environment.
