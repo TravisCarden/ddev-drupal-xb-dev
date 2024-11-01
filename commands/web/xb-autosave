@@ -2,7 +2,7 @@
 
 ## #ddev-generated
 ## Description: Enable, disable, or clear auto-save
-## Usage: xb-autosave on|off|enable|disable|true|false|toggle|status|clear
+## Usage: xb-autosave [on|off|enable|disable|true|false|toggle|status|clear]
 ## Example: ddev autosave         # Enable auto-save.\nddev autosave on      # Enable auto-save.\nddev autosave off     # Disable auto-save.\nddev autosave toggle  # Toggle auto-save status.\nddev autosave status  # Get auto-save status.\nddev autosave clear   # Clear all auto-saves.
 ## Aliases: autosave,as
 ## ExecRaw: false
