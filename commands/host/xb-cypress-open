@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## #ddev-generated
-## Description: Run Experience Builder's Cypress end-to-end tests in interactive mode.
+## Description: Run Cypress end-to-end tests in interactive mode.
 ## Usage: xb-cypress-open
 ## Example: ddev xb-cypress-open                     Run all tests.\nddev xb-cypress-open --env "VAR=value"   Pass arbitrary command arguments.
 ## Aliases: cy-open,cy:open

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## #ddev-generated
-## Description: Run Experience Builder's Cypress tests headlessly.
+## Description: Run Cypress tests headlessly.
 ## Usage: xb-cypress-run
 ## Example: ddev xb-cypress-run                     Run all tests.\nddev xb-cypress-run --env "VAR=value"   Pass arbitrary command arguments.
 ## Aliases: cy-run,cy:run

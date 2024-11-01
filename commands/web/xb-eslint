@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## #ddev-generated
-## Description: Check Experience Builder code for standards compliance with PHPCS.
+## Description: Find problems in JavaScript code with ESLint.
 ## Example: ddev xb-eslint
 ## Aliases: eslint
 
