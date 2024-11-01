@@ -2,8 +2,8 @@
 
 ## #ddev-generated
 ## Description: (Re)install Drupal and the Experience Builder module.
-## Example: ddev xb-drush-si
-## Aliases: drush-si,drush:si
+## Example: ddev xb-site-install
+## Aliases: site-install,si
 
 # Install Drupal.
 drush site:install -y \

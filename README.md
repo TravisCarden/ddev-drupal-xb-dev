@@ -94,7 +94,7 @@ ddev xb-npm-build
 To completely reinstall Drupal and the Experience Builder module, run:
 
 ```shell
-ddev xb-drush-si
+ddev xb-site-install
 ```
 
 ### Testing

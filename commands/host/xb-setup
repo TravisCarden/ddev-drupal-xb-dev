@@ -72,7 +72,7 @@ ddev composer require \
   webflo/drupal-finder
 
 # Install Drupal and enable the Experience Builder module
-ddev xb-drush-si
+ddev xb-site-install
 
 # Initialize the environment.
 ddev start
