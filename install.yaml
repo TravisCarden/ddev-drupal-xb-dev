@@ -20,7 +20,6 @@ project_files:
   - commands/web/xb-phpunit
   - commands/web/xb-site-install
   - commands/web/xb-stylelint
-  - commands/web/xb-stylelint-fix
   - config.drupal-xb-dev.yaml
 
 post_install_actions:
