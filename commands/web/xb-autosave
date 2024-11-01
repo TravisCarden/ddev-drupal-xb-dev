@@ -17,48 +17,23 @@ disable_autosave() {
   drush state:set experience_builder.disable_auto-save 1
 }
 
-if [ $# -eq 0 ] ; then
-  enable_autosave
-  exit
-fi
-
 get_autosave_status() {
-  if [ "$(drush state:get experience_builder.disable_auto-save)" = "1" ]; then
-    echo "0"
-  else
-    echo "1"
-  fi
+  [[ "$(drush state:get experience_builder.disable_auto-save)" == "1" ]] && echo "0" || echo "1"
 }
 
-case $1 in
-  on|true|enable)
-    enable_autosave
-    ;;
-  off|false|disable)
-    disable_autosave
-    ;;
-  toggle)
-    if [ "$(get_autosave_status)" = "1" ]; then
-      disable_autosave
-    else
-      enable_autosave
-    fi
-    ;;
-  status)
-    if [ "$(get_autosave_status)" = "1" ]; then
-      echo "autosave enabled"
-    else
-      echo "autosave disabled"
-    fi
-    ;;
-  clear)
-    drush \
-      sql:query \
-      "delete from key_value_expire where collection='tempstore.shared.experience_builder.auto_save'" \
-      > /dev/null
-    ;;
-  *)
-    echo "Invalid argument: $1"
-    exit 1
-    ;;
+clear_autosave() {
+  drush sql:query "delete from key_value_expire where collection='tempstore.shared.experience_builder.auto_save'" > /dev/null
+}
+
+# The default action is to enable auto-save.
+[[ $# -eq 0 ]] && enable_autosave && exit
+
+# Process command arguments.
+case "$1" in
+  on|true|enable) enable_autosave ;;
+  off|false|disable) disable_autosave ;;
+  toggle) if [[ "$(get_autosave_status)" == "1" ]]; then disable_autosave; else enable_autosave; fi ;;
+  status) if [[ "$(get_autosave_status)" == "1" ]]; then echo "autosave enabled"; else echo "autosave disabled"; fi ;;
+  clear) clear_autosave ;;
+  *) echo "Invalid argument: $1" >&2; exit 1 ;;
 esac
