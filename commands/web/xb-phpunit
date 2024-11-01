@@ -8,5 +8,5 @@
 cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT" || exit 1
 
 ../vendor/bin/phpunit \
-  --bootstrap core/tests/bootstrap.php \
+  -c core/phpunit.xml.dist \
   modules/contrib/experience_builder/"$*"
