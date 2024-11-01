@@ -1,0 +1,20 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Run all static analysis automatic fixer tools.
+## Usage: xb-fix
+## Example: ddev fix
+## Aliases: fix
+## Flags: []
+## ExecRaw: true
+
+echo Running PHPCBF...
+ddev phpcs fix
+
+echo
+echo Running ESLint fixer...
+ddev eslint fix
+
+echo
+echo Running Stylelint fixer...
+ddev stylelint fix
