@@ -20,4 +20,29 @@ project_files:
   - config.drupal-xb-dev.yaml
 
 post_install_actions:
+  - |
+    echo "Deleting commands removed in v0.0.16 (unless they've been modified)..."
+    FILES=(
+      "commands/host/.xb-command-include"
+      "commands/host/xb-cypress-component"
+      "commands/host/xb-cypress-open"
+      "commands/host/xb-cypress-run"
+      "commands/web/xb-drush-si"
+      "commands/web/xb-phpcbf"
+      "commands/web/xb-stylelint-fix"
+    )
+    for FILE in "${FILES[@]}"; do
+      if [[ ! -f "$FILE" ]]; then
+        continue
+      fi
+      # Skip the file if it has been modified.
+      if ! grep -q '## #ddev-generated' "$FILE"; then
+        echo "- Skipping $FILE - It has been modified"
+        continue
+      fi
+      # Otherwise delete it.
+      echo "- Deleting $FILE"
+      rm -f "$FILE"
+    done
+
   - echo "‼️ If you're setting up this add-on for the first time on this project, finish installation by running 'ddev xb-setup'"
