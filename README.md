@@ -49,6 +49,12 @@ Any time you update the Experience Builder module or modify its front-end code, 
 ddev ui-build
 ```
 
+When developing the React app, enable the `xb_vite` module (`ddev drush en xb_vite -y`), and run:
+
+```shell
+ddev xb-ui-dev
+```
+
 To completely reinstall Drupal and the Experience Builder module, run:
 
 ```shell

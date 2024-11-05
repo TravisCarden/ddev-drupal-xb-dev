@@ -5,7 +5,7 @@ web_environment:
   - DB_URL=sqlite://web/sites/default/files/db.sqlite
   - DISPLAY=host.docker.internal:0
   - DRUPAL_TEST_DB_URL=sqlite://web/sites/default/files/db.sqlite
-  - VITE_SERVER_ORIGIN=http://localhost:5173
+  - VITE_SERVER_ORIGIN=https://${DDEV_HOSTNAME}:5174
 webimage_extra_packages:
   - libasound2
   - libgbm-dev
@@ -17,3 +17,8 @@ webimage_extra_packages:
   - libxtst6
   - xauth
   - xvfb
+web_extra_exposed_ports:
+  - name: vite-dev-server
+    container_port: 5173
+    http_port: 5173
+    https_port: 5174
