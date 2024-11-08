@@ -54,7 +54,7 @@ Any time you update the Experience Builder module or modify its front-end code, 
 ddev ui-build
 ```
 
-When developing the React app, enable the `xb_vite` module (`ddev drush en xb_vite -y`), make sure you use the HTTPS URL of your DDEV project, then run:
+When developing the React app, make sure to use the HTTPS URL of your DDEV project, then run:
 
 ```shell
 ddev xb-ui-dev

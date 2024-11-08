@@ -7,5 +7,6 @@
 
 cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/experience_builder/ui" || exit 1
 
+drush pm:uninstall xb_vite -y > /dev/null 2>&1 || :
 npm ci
 npm run build
