@@ -9,8 +9,13 @@ This creates and configures a DDEV project for local Drupal [Experience Builder]
 - [Usage](#usage)
 - [Updating](#updating)
 - [Cypress](#cypress)
-- [Support & community](#support--community)
-- [FAQ & known issues](#faq--known-issues)
+  - [Setup](#setup)
+  - [Usage](#usage-1)
+- [Support \& community](#support--community)
+- [FAQ \& known issues](#faq--known-issues)
+  - [Can I use Cypress on Linux or Windows?](#can-i-use-cypress-on-linux-or-windows)
+  - [What if Cypress fails to start?](#what-if-cypress-fails-to-start)
+  - [What if I get an HTTPS error?](#what-if-i-get-an-https-error)
 
 ## Requirements
 
@@ -47,6 +52,12 @@ Any time you update the Experience Builder module or modify its front-end code, 
 
 ```shell
 ddev ui-build
+```
+
+When developing the React app, make sure to use the HTTPS URL of your DDEV project, then run:
+
+```shell
+ddev xb-ui-dev
 ```
 
 To completely reinstall Drupal and the Experience Builder module, run:

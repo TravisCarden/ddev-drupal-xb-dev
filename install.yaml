@@ -17,6 +17,7 @@ project_files:
   - commands/web/xb-site-install
   - commands/web/xb-stylelint
   - commands/web/xb-ui-build
+  - commands/web/xb-ui-dev
   - config.drupal-xb-dev.yaml
 
 post_install_actions:
