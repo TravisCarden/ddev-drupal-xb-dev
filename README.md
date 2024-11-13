@@ -57,7 +57,7 @@ ddev ui-build
 When developing the React app, make sure to use the HTTPS URL of your DDEV project, then run:
 
 ```shell
-ddev xb-ui-dev
+ddev ui-dev
 ```
 
 To completely reinstall Drupal and the Experience Builder module, run:
