@@ -10,6 +10,7 @@ project_files:
   - commands/host/xb-setup
   - commands/host/xb-static
   - commands/web/xb-autosave
+  - commands/web/xb-core-set-version
   - commands/web/xb-eslint
   - commands/web/xb-phpcs
   - commands/web/xb-phpstan
