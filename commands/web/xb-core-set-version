@@ -1,0 +1,30 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Change the version of Drupal core.
+## Usage: xb-core-set-version <core-version>
+## Example: ddev core ^11           # Use the latest 11.x.\nddev core 11.0.7        # Use a specific version.\nddev core "^10 || ^11"  # Use the latest 10.x or 11.x.
+## Aliases: core
+## Flags: []
+## ExecRaw: true
+
+cd "$DDEV_COMPOSER_ROOT" || exit 1
+
+if [ "$#" -ne 1 ]; then
+  echo "Error: provide exactly one argument"
+  echo "Usage: core <core-version>"
+  exit 1
+fi
+
+CORE_VERSION=$1
+
+composer require  \
+  --dev \
+  --no-update \
+  "drupal/core-dev:$CORE_VERSION"
+composer require \
+  --no-update \
+  "drupal/core-recommended:$CORE_VERSION" \
+  "drupal/core-composer-scaffold:$CORE_VERSION" \
+  "drupal/core-project-message:$CORE_VERSION"
+composer update --with-all-dependencies
