@@ -2,7 +2,7 @@
 
 ## #ddev-generated
 ## Description: Change the version of Drupal core.
-## Example: ddev xb-set-core-version 11.1
+## Example: ddev xb-core-set-version 11.1
 
 cd "$DDEV_COMPOSER_ROOT" || exit 1
 
