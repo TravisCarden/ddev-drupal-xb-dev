@@ -2,7 +2,12 @@
 
 ## #ddev-generated
 ## Description: Change the version of Drupal core.
+## Usage: xb-core-set-version <core-version>
+## ExecRaw: true
 ## Example: ddev xb-core-set-version 11.1
+## Aliases: core
+## Flags: []
+## ExecRaw: true
 
 cd "$DDEV_COMPOSER_ROOT" || exit 1
 
