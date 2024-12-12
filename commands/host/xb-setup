@@ -7,7 +7,7 @@
 ## Flags: [{"Name":"force","Shorthand":"f","Usage":"Completely reset an existing environment if present and start over"}]
 ## ExecRaw: true
 
-cd "$(dirname "$0")" || exit; source .xb-command-include
+cd "$(dirname "$0")" || exit
 cd ../../../
 
 # Flag-handling.
