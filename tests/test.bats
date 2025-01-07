@@ -16,7 +16,7 @@ check_commands_installed() {
   # Get the available commands.
   ddev_help_output=$(ddev help)
   # Find command files in the add-on.
-  cd ${TESTDIR}
+  cd "${TESTDIR}"
   tmp_file=$(mktemp)
   find "$GITHUB_WORKSPACE/commands" -name 'xb-*' -exec basename {} \; > "$tmp_file"
   # Check that all the command files got copied to the project upon installation.
@@ -46,14 +46,14 @@ health_checks() {
 
 teardown() {
   set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to %s\n" ${TESTDIR} && exit 1 )
-  ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
-  [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
+  cd "${TESTDIR}" || ( printf "unable to cd to %s\n" "${TESTDIR}" && exit 1 )
+  ddev delete -Oy "${PROJNAME}" >/dev/null 2>&1
+  [ "${TESTDIR}" != "" ] && rm -rf "${TESTDIR}"
 }
 
 @test "install from directory" {
   set -eu -o pipefail
-  cd ${TESTDIR}
+  cd "${TESTDIR}"
   echo "# ddev add-on get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev add-on get "${DIR}"
   ddev restart
@@ -63,7 +63,7 @@ teardown() {
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to %s\n" ${TESTDIR} && exit 1 )
+  cd "${TESTDIR}" || ( printf "unable to cd to %s\n" "${TESTDIR}" && exit 1 )
   echo "# ddev add-on get TravisCarden/ddev-drupal-xb-dev with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev add-on get TravisCarden/ddev-drupal-xb-dev
   ddev restart >/dev/null
