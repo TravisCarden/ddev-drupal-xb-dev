@@ -39,8 +39,19 @@ check_commands_installed() {
   echo "All commands were installed."
 }
 
+check_xb_setup_command() {
+  ddev xb-setup
+  # Check for settings.php customizations.
+  if ! grep -q extension_discovery_scan_tests web/sites/default/settings.ddev.php; then
+    echo "Failed to enable extension_discovery_scan_tests in settings.ddev.php."
+    return 1
+  fi
+  echo "Enabled extension_discovery_scan_tests in settings.ddev.php."
+}
+
 health_checks() {
   check_commands_installed
+  check_xb_setup_command
   ddev exec "curl -s https://localhost:443/"
 }
 
