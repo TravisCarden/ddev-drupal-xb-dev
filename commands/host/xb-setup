@@ -52,6 +52,7 @@ git clone \
 ddev composer \
   require \
   --no-install \
+  --no-interaction \
   drush/drush
 
 # Require the Experience Builder module. Still don't install.
@@ -61,12 +62,14 @@ ddev composer config \
   web/modules/contrib/experience_builder
 ddev composer require \
   --no-install \
+  --no-interaction \
   drupal/experience_builder
 
 # Require dev dependencies. NOW install.
 ddev composer require \
   --dev \
   --update-with-all-dependencies \
+  --no-interaction \
   devizzent/cebe-php-openapi \
   league/openapi-psr7-validator \
   webflo/drupal-finder
