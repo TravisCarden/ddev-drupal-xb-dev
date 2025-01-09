@@ -40,6 +40,10 @@ ddev add-on get TravisCarden/ddev-drupal-xb-dev
 
 # Perform one-time setup operations.
 ddev xb-setup
+
+# Optionally add some developer-focused convenience tools
+# and features. Run 'ddev xb-extras --dry-run' to see what.
+ddev xb-extras
 ```
 
 ## Usage
