@@ -1,0 +1,59 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Add some convenience extras for development.
+## Usage: xb-dev-extras
+## Example: ddev xb-dev-extras\nddev xb-dev-extras --dry-run
+## Aliases: extras
+## Flags: [{"Name":"dry-run","Usage":"Show what the command will do if run"}]
+
+#  If the '--dry-run' flag is passed, show what the command would do and then exit.
+if [[ "$1" == "--dry-run" ]]; then
+  echo "This command will...
+  1. Install the following modules:
+     - Admin Toolbar (admin_toolbar)
+     - Admin Toolbar (admin_toolbar_tools)
+     - Coffee (coffee)
+     - \"All-Props\" Test SDC (sdc_test_all_props)
+  2. Create a test page at '/test'."
+  exit 0
+fi
+
+# Add the modules to the codebase.
+composer require \
+  --no-interaction \
+  drupal/admin_toolbar \
+  drupal/admin_toolbar_tools \
+  drupal/coffee
+
+# Install the modules in Drupal.
+drush en -y \
+  admin_toolbar \
+  admin_toolbar_tools \
+  coffee \
+  sdc_test_all_props
+
+# Create a test page. Note: If any more PHP code is added here, it should be
+# extracted to its own file. Writing it this way is clumsy, to say the least.
+drush php:eval "
+  \$alias = '/test';
+  \$path_alias_repository = \Drupal::service('path_alias.repository');
+
+  // See if the test page already exists and exit if so. (Just checking for
+  // the path alias is naive, but it will suffice for our purposes.
+  if (\$path_alias_repository->lookupByAlias(\$alias, 'en')) {
+    echo 'The test page already exists.' . PHP_EOL;
+    return;
+  }
+
+  // Create the xb_page entity.
+  \Drupal::service('entity_type.manager')
+    ->getStorage('xb_page')
+    ->create([
+      'title' => 'XB 💫',
+      'description' => 'This is an XB page.',
+      'path' => ['alias' => \$alias],
+    ])->save();
+
+  echo 'The test page has been created.' . PHP_EOL;
+"

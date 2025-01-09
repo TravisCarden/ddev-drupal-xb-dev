@@ -11,6 +11,7 @@ project_files:
   - commands/host/xb-static
   - commands/web/xb-autosave
   - commands/web/xb-core-set-version
+  - commands/web/xb-dev-extras
   - commands/web/xb-eslint
   - commands/web/xb-phpcs
   - commands/web/xb-phpstan
@@ -47,4 +48,6 @@ post_install_actions:
       rm -f "$FILE"
     done
 
-  - echo "‼️ If you're setting up this add-on for the first time on this project, finish installation by running 'ddev xb-setup'"
+  - |
+    echo "‼️ If you're setting up this add-on for the first time on this project, finish installation by running 'ddev xb-setup'."
+    echo "💡 To set up optional extras for development, run 'ddev xb-dev-extras'. Run 'ddev xb-dev-extras --help' to see what it will do first."
