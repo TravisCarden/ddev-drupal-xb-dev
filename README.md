@@ -33,7 +33,7 @@ cd ~/Sites/xb-dev
 ddev config --project-type=drupal --php-version=8.3 --docroot=web
 
 # Create the Drupal project.
-ddev composer create drupal/recommended-project:^11.x-dev --no-install
+ddev composer create drupal/recommended-project:10.x@dev --no-install
 
 # Install the add-on.
 ddev add-on get TravisCarden/ddev-drupal-xb-dev
