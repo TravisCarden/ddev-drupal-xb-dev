@@ -1,0 +1,49 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Configure the environment for Workspaces development.
+## Usage: xb-workspaces-dev
+## Example: ddev xb-workspaces-dev\nddev xb-workspaces-dev --dry-run
+## Aliases: workspaces,wse
+## Flags: [{"Name":"dry-run","Usage":"Show what the command will do if run"}]
+
+#  If the '--dry-run' flag is passed, show what the command would do and then exit.
+if [[ "$1" == "--dry-run" ]]; then
+  echo "This command will...
+  1. Install the following modules:
+     - Workspaces (workspaces)
+     - Workspaces UI (workspaces_ui)
+     - Workspaces Extras (wse)
+     - Workspaces Config (wse_config)
+  2. Perform the following configuration:
+     - Use the simplified workspace switcher in the toolbar
+     - Disable sub workspaces"
+  exit 0
+fi
+
+# Add the modules to the codebase. Use dev branches to always get
+# the latest commits and to facilitate upstream contribution.
+composer require \
+  --prefer-source \
+  --no-interaction \
+  drupal/wse:dev-2.0.x \
+  drupal/wse_config:dev-2.0.x
+
+# Install the modules in Drupal.
+drush en -y \
+  workspaces \
+  workspaces_ui \
+  wse \
+  wse_config
+
+# Use the simplified workspace switcher in the toolbar.
+drush config:set -y \
+  wse.settings \
+  simplified_toolbar_switcher \
+  true
+
+# Disable sub workspaces.
+drush config:set -y \
+  wse.settings \
+  disable_sub_workspaces \
+  true
