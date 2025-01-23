@@ -9,6 +9,10 @@
 
 cd "$(dirname "$0")" || exit
 cd ../../../
+set -e
+
+# Route Composer commands through DDEV.
+alias composer="ddev composer"
 
 # Flag-handling.
 while :; do
@@ -42,32 +46,37 @@ fi
 rm -rf web/modules/contrib/experience_builder
 mkdir -p web/modules/contrib
 
-# Place the Experience Builder module via Git for development. Require
-# it with Composer to test its composer.json and place dependencies.
-git clone \
-  git@git.drupal.org:project/experience_builder.git \
-  web/modules/contrib/experience_builder
+# Allow all Composer plugins.
+composer config \
+  --no-plugins \
+  allow-plugins.\* \
+  true
 
 # Require Drush, but don't install yet for performance reasons.
-ddev composer \
-  require \
+composer require \
   --no-install \
+  --update-with-all-dependencies \
   --no-interaction \
   drush/drush
 
-# Require the Experience Builder module and soft dependencies. Still don't install.
-ddev composer config \
+# Place the Experience Builder module via Git for development. Require it and its
+# soft dependencies with Composer to test its composer.json. Still don't install.
+git clone \
+  git@git.drupal.org:project/experience_builder.git \
+  web/modules/contrib/experience_builder
+composer config \
   repositories.xb \
   path \
   web/modules/contrib/experience_builder
-ddev composer require \
+composer require \
   --no-install \
+  --update-with-all-dependencies \
   --no-interaction \
   drupal/experience_builder \
   drupal/metatag:^2.1
 
 # Require dev dependencies. NOW install.
-ddev composer require \
+composer require \
   --dev \
   --update-with-all-dependencies \
   --no-interaction \
@@ -77,16 +86,13 @@ ddev composer require \
   league/openapi-psr7-validator:^0.22.0 \
   webflo/drupal-finder:^1.3.1
 
-# Install Drupal and enable the Experience Builder module.
-ddev xb-site-install
-
-# Initialize the environment.
-ddev start
-
 # Allow test modules and themes to be installed.
 # shellcheck disable=SC2016
 printf '\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' \
   >> web/sites/default/settings.ddev.php
+
+# Install Drupal and enable the Experience Builder module.
+ddev xb-site-install
 
 # Install Drupal core NPM packages.
 ddev exec --dir /var/www/html/web/core -- npm install
@@ -95,4 +101,4 @@ ddev exec --dir /var/www/html/web/core -- npm install
 ddev xb-ui-build
 
 # Install DDEV Selenium Standalone Chrome
-ddev get ddev/ddev-selenium-standalone-chrome
+ddev add-on get ddev/ddev-selenium-standalone-chrome
