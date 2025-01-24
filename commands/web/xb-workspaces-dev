@@ -12,7 +12,7 @@ if [[ "$1" == "--dry-run" ]]; then
   echo "This command will...
   1. Install the following modules:
      - Workspaces (workspaces)
-     - Workspaces UI (workspaces_ui) (as of Drupal 11)
+     - Workspaces UI (workspaces_ui)
      - Workspaces Extras (wse)
      - Workspaces Config (wse_config)
   2. Perform the following configuration:
@@ -32,14 +32,9 @@ composer require \
 # Install the modules in Drupal.
 drush en -y \
   workspaces \
+  workspaces_ui \
   wse \
   wse_config
-
-# Workspaces UI is a separate module as of Drupal 11. Enable it if it's available.
-WORKSPACES_UI="workspaces_ui"
-if drush pm:list --type=Module --status=disabled | grep -q "^$WORKSPACES_UI$"; then
-  drush pm:install --yes "$WORKSPACES_UI"
-fi
 
 # Use the simplified workspace switcher in the toolbar.
 drush config:set -y \

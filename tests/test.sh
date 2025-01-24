@@ -42,16 +42,16 @@ ddev config \
 ddev config --project-type=drupal --php-version=8.3 --docroot=web
 
 # Create the Drupal project.
-ddev composer create drupal/recommended-project:10.x@dev --no-install
+ddev composer create drupal/recommended-project:^11.x-dev --no-install
 
 # Get the add-on.
-ddev add-on get ../../
+ddev get ../../
 
 # Perform one-time setup operations.
 ddev xb-setup
 
 # Test an update.
-ddev add-on get ../../
+ddev get ../../
 
 # Try to perform one-time setup operations when they've already been done.
 ddev xb-setup
