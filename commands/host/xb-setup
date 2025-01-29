@@ -52,6 +52,12 @@ git clone \
   git@git.drupal.org:project/experience_builder.git \
   web/modules/contrib/experience_builder
 
+# Allow all Composer plugins.
+composer config \
+  --no-plugins \
+  allow-plugins.\* \
+  true
+
 # Require Drush, but don't install yet for performance reasons.
 composer require \
   --no-install \
