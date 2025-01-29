@@ -89,4 +89,4 @@ ddev exec --dir /var/www/html/web/core -- npm install
 ddev xb-ui-build
 
 # Install DDEV Selenium Standalone Chrome
-ddev get ddev/ddev-selenium-standalone-chrome
+ddev add-on get ddev/ddev-selenium-standalone-chrome
