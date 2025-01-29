@@ -18,7 +18,7 @@ PROJECT_NAME="ddev-drupal-xb-dev"
 PROJECT_DIR="test-site"
 DRUPAL_VERSION="10.x@dev"
 
-cd "$(dirname "$0")/../var/$($PROJECT_DIR)" && clear || exit 1
+cd "$(dirname "$0")/../var" && clear || exit 1
 clear; set -ev
 
 # Clean up from previous runs.
