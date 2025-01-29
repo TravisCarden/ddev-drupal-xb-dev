@@ -61,6 +61,7 @@ composer config \
 # Require Drush, but don't install yet for performance reasons.
 composer require \
   --no-install \
+  --update-with-all-dependencies \
   --no-interaction \
   drush/drush
 
@@ -71,6 +72,7 @@ composer config \
   web/modules/contrib/experience_builder
 composer require \
   --no-install \
+  --update-with-all-dependencies \
   --no-interaction \
   drupal/experience_builder
 
@@ -79,9 +81,11 @@ composer require \
   --dev \
   --update-with-all-dependencies \
   --no-interaction \
-  devizzent/cebe-php-openapi \
-  league/openapi-psr7-validator \
-  webflo/drupal-finder
+  devizzent/cebe-php-openapi:^1.0.3 \
+  drupal/metatag:^2. \
+  jangregor/phpstan-prophecy:^1.0.2 \
+  league/openapi-psr7-validator:^0.22.0 \
+  webflo/drupal-finder:^1.3.1
 
 # Allow test modules and themes to be installed.
 # shellcheck disable=SC2016
