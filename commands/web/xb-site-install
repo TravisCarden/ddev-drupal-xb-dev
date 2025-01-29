@@ -12,7 +12,9 @@ drush site:install -y \
   --site-name="XB Local Dev"
 
 # Enable the Experience Builder module.
-drush en -y experience_builder
+drush pm:install -y \
+  experience_builder \
+  xb_dev_standard
 
 # Create a default article.
 drush php:eval "(\Drupal\node\Entity\Node::create(['type' => 'article', 'title' => 'Test', 'uid' => 1]))->save();"
