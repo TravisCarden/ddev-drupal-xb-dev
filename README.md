@@ -51,19 +51,19 @@ The installation process clones [the Experience Builder module](https://www.drup
 Any time you update the Experience Builder module or modify its front-end code, be sure to rebuild the UI app assets:
 
 ```shell
-ddev ui-build
+ddev xb-ui-build
 ```
 
 When developing the React app, make sure to use the HTTPS URL of your DDEV project, then run:
 
 ```shell
-ddev ui-dev
+ddev xb-ui-dev
 ```
 
 To completely reinstall Drupal and the Experience Builder module, run:
 
 ```shell
-ddev site-install
+ddev xb-site-install
 ```
 
 For the full list of available Experience Builder commands, run this:
