@@ -14,13 +14,39 @@ drush site:install -y \
 # Enable the Experience Builder module.
 drush pm:install -y \
   experience_builder \
-  xb_dev_standard
+  xb_dev_standard \
+  sdc_test_all_props
 
 # Without a cache rebuild, Drupal can't find test modules, leading to a WSOD.
 drush cache:rebuild
 
 # Create a default article.
 drush php:eval "(\Drupal\node\Entity\Node::create(['type' => 'article', 'title' => 'Test', 'uid' => 1]))->save();"
+
+# Create a test page. Note: If any more PHP code is added here, it should be
+# extracted to its own file. Writing it this way is clumsy, to say the least.
+drush php:eval "
+  \$alias = '/test';
+  \$path_alias_repository = \Drupal::service('path_alias.repository');
+
+  // See if the test page already exists and exit if so. (Just checking for
+  // the path alias is naive, but it will suffice for our purposes.
+  if (\$path_alias_repository->lookupByAlias(\$alias, 'en')) {
+    echo 'The test page already exists.' . PHP_EOL;
+    return;
+  }
+
+  // Create the xb_page entity.
+  \Drupal::service('entity_type.manager')
+    ->getStorage('xb_page')
+    ->create([
+      'title' => 'XB 💫',
+      'description' => 'This is an XB page.',
+      'path' => ['alias' => \$alias],
+    ])->save();
+
+  echo 'The test page has been created.' . PHP_EOL;
+"
 
 # Display a one time login link for user ID 1.
 drush uli
