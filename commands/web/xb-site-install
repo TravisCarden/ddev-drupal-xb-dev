@@ -11,15 +11,8 @@ drush site:install -y \
   --account-pass=admin \
   --site-name="XB Local Dev"
 
-# Enable Experience Builder and development modules if present.
-modules=(experience_builder)
-XB_DEV_STANDARD="xb_dev_standard"
-# As of now, the xb_dev_standard should always be there, but in the event that
-# it gets removed or renamed, this check will prevent an error.
-if drush pm:list --type=Module --status=disabled | grep -q "^$XB_DEV_STANDARD$"; then
-  modules+=("$XB_DEV_STANDARD")
-fi
-drush pm:install -y "${modules[@]}"
+# Enable the Experience Builder module.
+drush en -y experience_builder
 
 # Without a cache rebuild, Drupal can't find test modules, leading to a WSOD.
 drush cache:rebuild
