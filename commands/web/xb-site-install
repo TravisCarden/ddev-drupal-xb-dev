@@ -21,6 +21,9 @@ if drush pm:list --type=Module --status=disabled | grep -q "^$XB_DEV_STANDARD$";
 fi
 drush pm:install -y "${modules[@]}"
 
+# Without a cache rebuild, Drupal can't find test modules, leading to a WSOD.
+drush cache:rebuild
+
 # Create a default article.
 drush php:eval "(\Drupal\node\Entity\Node::create(['type' => 'article', 'title' => 'Test', 'uid' => 1]))->save();"
 
