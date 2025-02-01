@@ -40,6 +40,14 @@ ddev add-on get TravisCarden/ddev-drupal-xb-dev
 
 # Perform one-time setup operations.
 ddev xb-setup
+
+# Optionally add some convenience extras for development.
+ddev xb-dev-extras
+
+# Optionally configure the environment for Workspaces development. Note: This can be
+# a little volatile due to upstream Workspaces changes. Be aware that it can fail
+# and leave your site in a non-working state requiring you to set it up again from scratch.
+ddev xb-workspaces-dev
 ```
 
 ## Usage
