@@ -14,7 +14,6 @@ if [[ "$1" == "--dry-run" ]]; then
      - Admin Toolbar (admin_toolbar)
      - Admin Toolbar (admin_toolbar_tools)
      - Coffee (coffee)
-     - \"All-Props\" Test SDC (sdc_test_all_props)
   2. Create a test page at '/test'."
   exit 0
 fi
@@ -30,30 +29,6 @@ composer require \
 drush en -y \
   admin_toolbar \
   admin_toolbar_tools \
-  coffee \
-  sdc_test_all_props
+  coffee
 
-# Create a test page. Note: If any more PHP code is added here, it should be
-# extracted to its own file. Writing it this way is clumsy, to say the least.
-drush php:eval "
-  \$alias = '/test';
-  \$path_alias_repository = \Drupal::service('path_alias.repository');
 
-  // See if the test page already exists and exit if so. (Just checking for
-  // the path alias is naive, but it will suffice for our purposes.
-  if (\$path_alias_repository->lookupByAlias(\$alias, 'en')) {
-    echo 'The test page already exists.' . PHP_EOL;
-    return;
-  }
-
-  // Create the xb_page entity.
-  \Drupal::service('entity_type.manager')
-    ->getStorage('xb_page')
-    ->create([
-      'title' => 'XB 💫',
-      'description' => 'This is an XB page.',
-      'path' => ['alias' => \$alias],
-    ])->save();
-
-  echo 'The test page has been created.' . PHP_EOL;
-"
