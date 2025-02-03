@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # This file is for self-testing this add-on during local development.
 #
@@ -14,61 +14,124 @@
 #   cd ddev-drupal-xb-dev
 #   ./tests/test.sh
 
-PROJECT_NAME="ddev-drupal-xb-dev"
-PROJECT_DIR="test-site"
-DRUPAL_VERSION="10.x@dev"
+set -e # Exit immediately if a command exits with a non-zero status.
+set -o pipefail # Return the exit status of the last command in the pipeline that failed.
+set -x  # Enable debugging.
 
 cd "$(dirname "$0")/../var" && clear || exit 1
-clear; set -ev
 
-# Clean up from previous runs.
-PROJECT_EXISTS=$(ddev list | grep -q "$PROJECT_NAME.ddev.site") || true
-if [ -d $PROJECT_DIR ] || [ -n "$PROJECT_EXISTS" ]; then
-  yes | ddev clean $PROJECT_NAME || true
-  ddev remove --unlist $PROJECT_NAME || true
-  rm -rf $PROJECT_DIR || true
-fi
+var_dir=$(pwd)
+project_name="drupal-xb-dev-test-site"
+project_dir="test-site"
 
-mkdir $PROJECT_DIR || true
-cd $PROJECT_DIR || exit 1
+addon="$var_dir/../"
+#addon="TravisCarden/ddev-drupal-xb-dev"
 
-# Create a new project.
-ddev config \
-  --project-name=$PROJECT_NAME \
-  --project-type=drupal \
-  --php-version=8.3 \
-  --docroot=web
+drupal_version="10.x@dev"
+#drupal_version="^11.x-dev"
 
-# Configure the new DDEV project.
-ddev config --project-type=drupal --php-version=8.3 --docroot=web
+num_runs=1  # The number of times to run the test
+declare -a failure_logs  # Array to store failure details
 
-# Create the Drupal project.
-ddev composer create drupal/recommended-project:$DRUPAL_VERSION --no-install
+# Color codes
+green="\033[0;32m"
+red="\033[0;31m"
+reset_color="\033[0m"
 
-# Get the add-on.
-ddev add-on get ../../
+run_test() {
+  cd "$var_dir" || exit 1
 
-# Perform one-time setup operations.
-ddev xb-setup
+  ## Clean up from previous runs.
+  echo "Cleaning up from previous runs..."
+  if ddev list | grep -q "$project_name"; then
+    ddev remove \
+      --omit-snapshot \
+      --unlist \
+      "$project_name" || { failure_logs+=("ddev remove"); return 1; }
+  fi
+  rm -rf "$project_dir" || true
 
-# Test an update.
-ddev add-on get ../../
+  # Create a new project.
+  mkdir "$project_dir" || { failure_logs+=("mkdir $project_dir"); return 1; }
+  cd "$project_dir" || { failure_logs+=("cd $project_dir"); return 1; }
+  echo "Running ddev config --project-name=$project_name --project-type=drupal --php-version=8.3 --docroot=web..."
+  ddev config \
+    --project-name="$project_name" \
+    --project-type=drupal \
+    --php-version=8.3 \
+    --docroot=web || { failure_logs+=("ddev config"); return 1; }
 
-# Try to perform one-time setup operations when they've already been done.
-ddev xb-setup
+  # Create the Drupal project.
+  echo "Running ddev composer create drupal/recommended-project:$drupal_version --no-install..."
+  ddev composer create drupal/recommended-project:"$drupal_version" --no-install || { failure_logs+=("ddev composer create drupal/recommended-project:$drupal_version --no-install"); return 1; }
 
-# Make sure all the commands get installed.
-DDEV_HELP_OUTPUT=$(ddev help)
-find "commands" -name 'xb-*' -exec basename {} \; | while read -r COMMAND_NAME; do
-  if ! echo "$DDEV_HELP_OUTPUT" | grep -q "$COMMAND_NAME"; then
-    echo "Error: $COMMAND_NAME is not installed."
-    exit 1
+  # Get the add-on.
+  echo "Running ddev add-on get $addon..."
+  ddev add-on get "$addon" || { failure_logs+=("ddev add-on get $addon"); return 1; }
+
+  # Make sure all the commands got installed and registered.
+  ddev_help_output=$(ddev help) || { failure_logs+=("ddev help"); return 1; }
+  errors=""
+  echo
+  echo "Verifying that all commands are fully installed and registered..."
+  find ".ddev/commands" -name 'xb-*' -exec basename {} \; | while read -r command_name; do
+    # Skip xb-cypress on CI since it only gets installed on Mac.
+    if [ "$command_name" = "xb-cypress" ] && [ -n "$GITHUB_ACTIONS" ]; then
+      continue
+    fi
+    if echo "$ddev_help_output" | grep -q "$command_name"; then
+      echo -e "- ${green}PASS:${reset_color} '$command_name' registered"
+    else
+      echo -e "- ${red}FAIL:${reset_color} '$command_name' not registered"
+      errors="true"
+    fi
+  done || { failure_logs+=("find .ddev/commands"); return 1; }
+  if [ -n "$errors" ]; then
+    return 1
+  fi
+  echo
+
+  # Perform one-time setup operations.
+  echo "Running ddev xb-setup..."
+  ddev xb-setup || { failure_logs+=("ddev xb-setup"); return 1; }
+
+  ddev xb-dev-extras || { failure_logs+=("ddev xb-dev-extras"); return 1; }
+
+  ddev xb-workspaces-dev || { failure_logs+=("ddev xb-workspaces-dev"); return 1; }
+
+  ddev drush uli || { failure_logs+=("ddev drush uli"); return 1; }
+}
+
+# Initialize counters.
+success_count=0
+failure_count=0
+
+# Run tests.
+for ((i = 1; i <= num_runs; i++)); do
+  if run_test; then
+    # Success
+    echo "Success"
+    ((success_count++))
+  else
+    # Failure
+    echo "Failed"
+    ((failure_count++))
   fi
 done
-echo "All commands are installed."
 
-# Install dev extras.
-ddev xb-dev-extras
+# Print summary.
+echo
+echo "Summary:"
+echo "Add-on: $addon"
+echo "Drupal version: $drupal_version"
+echo "Successes: $success_count"
+echo "Failures: $failure_count"
 
-# Configure environment for Workspaces development.
-ddev xb-workspaces-dev
+# Print failure logs if there were failures.
+if ((failure_count > 0)); then
+  echo "Failed Commands:"
+  for failure in "${failure_logs[@]}"; do
+    echo " - $failure"
+  done
+  exit 1
+fi

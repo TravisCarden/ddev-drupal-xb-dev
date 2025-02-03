@@ -28,7 +28,7 @@ permissions:
     actions: write
 
 jobs:
-    tests:
+    bats_tests:
         strategy:
             matrix:
                 ddev_version: [ stable, HEAD ]
@@ -44,3 +44,45 @@ jobs:
                     debug_enabled: ${{ github.event.inputs.debug_enabled }}
                     addon_repository: ${{ env.GITHUB_REPOSITORY }}
                     addon_ref: ${{ env.GITHUB_REF }}
+
+    end_to_end_test:
+        runs-on: ubuntu-latest
+
+        env:
+            # Set the terminal to xterm to avoid issues with tmate.
+            TERM: xterm
+            # Don't try interactive behaviors
+            DDEV_NONINTERACTIVE: "true"
+            # Don't send telemetry to amplitude
+            DDEV_NO_INSTRUMENTATION: "true"
+
+        # See https://github.com/ddev/github-action-add-on-test/blob/v2.3.0/action.yaml
+        # for more on setting up the environment for DDEV.
+        steps:
+            -   name: "Set up Homebrew"
+                uses: Homebrew/actions/setup-homebrew@master
+
+            -   name: "Checkout code"
+                uses: actions/checkout@v4 # https://github.com/marketplace/actions/checkout
+
+            -   name: "Install DDEV and dependencies"
+                shell: bash
+                run: |
+                    brew install \
+                    ddev/ddev/ddev >/dev/null \
+                    mkcert nss >/dev/null
+
+            -   name: "Download docker images"
+                shell: bash
+                run: ddev debug download-images >/dev/null
+
+            -   name: "Setup SSH key"
+                run: |
+                    mkdir -p ~/.ssh
+                    echo "${{ secrets.GIT_DRUPAL_ORG_PRIVATE_SSH_KEY }}" > ~/.ssh/id_ed25519
+                    chmod 600 ~/.ssh/id_ed25519
+                    ssh-keyscan -H git.drupal.org >> ~/.ssh/known_hosts
+
+            -   name: "Run test"
+                shell: bash
+                run: ./tests/test.sh
