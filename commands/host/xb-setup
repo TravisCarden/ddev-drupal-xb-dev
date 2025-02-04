@@ -11,9 +11,6 @@ cd "$(dirname "$0")" || exit
 cd ../../../
 set -e
 
-# Route Composer commands through DDEV.
-alias composer="ddev composer"
-
 # Flag-handling.
 while :; do
   case ${1:-} in
@@ -53,31 +50,31 @@ git clone \
   web/modules/contrib/experience_builder
 
 # Allow all Composer plugins.
-composer config \
+ddev composer config \
   --no-plugins \
   allow-plugins.\* \
   true
 
 # Require Drush, but don't install yet for performance reasons.
-composer require \
+ddev composer require \
   --no-install \
   --update-with-all-dependencies \
   --no-interaction \
   drush/drush
 
 # Require the Experience Builder module. Still don't install.
-composer config \
+ddev composer config \
   repositories.xb \
   path \
   web/modules/contrib/experience_builder
-composer require \
+ddev composer require \
   --no-install \
   --update-with-all-dependencies \
   --no-interaction \
   drupal/experience_builder
 
 # Require dev dependencies. NOW install.
-composer require \
+ddev composer require \
   --dev \
   --update-with-all-dependencies \
   --no-interaction \
