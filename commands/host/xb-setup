@@ -92,6 +92,24 @@ composer require \
 printf '\n# Allow test modules and themes to be installed.\n$settings["extension_discovery_scan_tests"] = TRUE;' \
   >> web/sites/default/settings.ddev.php
 
+echo "Sleep to ensure mutagen syncs";
+sleep 15;
+
+# Wait for Drush to become available.
+# This can happen due to delays in mutagen sync.
+echo "Waiting for Drush to become available..."
+TIMEOUT=60
+ELAPSED=0
+while ! ddev drush status >/dev/null 2>&1; do
+  if [ $ELAPSED -ge $TIMEOUT ]; then
+    echo "Error: Timed out waiting for Drush to become available after ${TIMEOUT} seconds."
+    exit 1
+  fi
+  echo "Waiting for Drush... ($ELAPSED/${TIMEOUT}s)"
+  sleep 2
+  ELAPSED=$((ELAPSED + 2))
+done
+
 # Install Drupal and enable the Experience Builder module.
 ddev xb-site-install
 
