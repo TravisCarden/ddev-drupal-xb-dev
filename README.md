@@ -19,7 +19,7 @@ This creates and configures a DDEV project for local Drupal [Experience Builder]
 
 ## Requirements
 
-Obviously, this requires a working [DDEV](https://ddev.com/) installation. It has been successfully tested with Orbstack, Colima, Rancher Desktop, and Docker Desktop.
+Obviously, this requires a working [DDEV](https://ddev.com/) installation. It has been successfully tested with [Orbstack](https://orbstack.dev/), [Lima](https://lima-vm.io/), [Colima](https://github.com/abiosoft/colima), [Rancher Desktop](https://rancherdesktop.io/), and [Docker Desktop](https://www.docker.com/products/docker-desktop/). Others should work fine, as well.
 
 ## Installation
 
