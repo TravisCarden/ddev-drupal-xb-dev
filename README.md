@@ -146,7 +146,9 @@ ddev cypress component
 
 ### Can I use Cypress on Linux or Windows?
 
-No, not currently; and there are no plans at present to support it. See [Support & community](#support--community) above if you want to make a case for it.
+For Windows + WSL2, some people were able to use an X server successfully. See instructions for [Windows+WSL2](#setup-for-windows-using-ddev-inside-wsl2).
+For Linux we don't have yet proof that it works.
+See [Support & community](#support--community) above if you want to make a case for it.
 
 ### What if Cypress fails to start?
 
