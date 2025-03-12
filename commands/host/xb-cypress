@@ -7,12 +7,13 @@
 ## Aliases: cypress,cy
 ## Flags: []
 ## AutocompleteTerms: ["component","open","run"]
-## OSTypes: darwin
+## OSTypes: darwin,linux
 ## ExecRaw: true
 
 cd "$(dirname "$0")" || exit 1
 
 CYPRESS_BIN="$(dirname "$0")/../../../web/modules/contrib/experience_builder/ui/node_modules/.bin/cypress"
+CYPRESS_BIN_INSIDE="/var/www/html/web/modules/contrib/experience_builder/ui/node_modules/.bin/cypress"
 
 # Check for the presence of Cypress.
 if ! command -v "$CYPRESS_BIN" &>/dev/null; then
@@ -20,19 +21,39 @@ if ! command -v "$CYPRESS_BIN" &>/dev/null; then
   exit 1
 fi
 
-# Check if XQuartz is installed and running.
-if ! open -Ra XQuartz; then
-  echo "Cannot find XQuartz. Install it and try again."
-  echo "Hint: https://github.com/TravisCarden/ddev-drupal-xb-dev#cypress"
-  exit 1
+# On Mac, check if XQuartz is installed and running.
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if ! open -Ra XQuartz; then
+    echo "Cannot find XQuartz. Install it and try again."
+    echo "Hint: https://github.com/TravisCarden/ddev-drupal-xb-dev#cypress"
+    exit 1
+  fi
+
+  # Start XQuartz if it isn't running.
+  if ! pgrep -x Xquartz &>/dev/null; then
+    open -a XQuartz
+    # Give it a moment to start up.
+    sleep 2
+  fi
 fi
 
-# Start XQuartz if it isn't running.
-if ! pgrep -x Xquartz &>/dev/null; then
-  open -a XQuartz
-  # Give it a moment to start up.
-  sleep 2
+# Running on WSL2
+if [[ "$OSTYPE" == "linux"* && ! -z "$WSL_DISTRO_NAME" ]]; then
+  # This assumes installation would be on C: and no custom path.
+  if [[ -f /mnt/c/Program\ Files/VcXsrv/vcxsrv.exe ]]; then
+    # Check if it's running, as you cannot have two instances
+    X_RUNNING=$(powershell.exe -Command "Get-Process vcxsrv" -ErrorAction SilentlyContinue)
+    if [[ -z $X_RUNNING ]]; then
+      powershell.exe -Command "Start-Process -FilePath 'C:\Program Files\VcXsrv\vcxsrv.exe' -ArgumentList '-multiwindow -ac -wgl'"
+    fi
+  else
+      echo "Cannot find VcXsrv. Install it and try again."
+      echo "Hint: https://github.com/TravisCarden/ddev-drupal-xb-dev#cypress"
+      exit 1
+  fi
 fi
+
+# Linux? You are on your own, but might _just_ work.
 
 # Open up the allowed X11 hosts.
 xhost +
@@ -41,7 +62,8 @@ xhost +
 function xb_cypress {
   ddev exec \
     --dir /var/www/html/web/modules/contrib/experience_builder/ui \
-    "$CYPRESS_BIN $1"
+    # This needs to be the binary path inside the container.
+    "$CYPRESS_BIN_INSIDE $1"
 }
 
 # Remove "--", if present, or it gets treated as the command argument.

@@ -87,8 +87,9 @@ Update the Experience Builder module clone just like you would any other Git rep
 ## Cypress
 
 Experience Builder uses [Cypress](https://www.cypress.io/) for front-end testing. It is currently only supported on macOS.
+Linux and Windows with WSL2 might work with the instructions below.
 
-### Setup
+### Setup for MacOS
 
 > Carefully follow the below XQuartz configuration steps after installing it. Failure to do so will result in frustrating, difficult to debug problems.
 
@@ -107,6 +108,13 @@ Configure XQuartz to allow connections from the host:
 - Log out and back in or restart your machine for the change to take effect.
 
 ![XQuartz Preferences dialog](resources/xquartz-settings.png)
+
+### Setup for Windows using ddev inside WSL2
+
+> This is experimental.
+
+Install [VcXsrv Windows X Server](https://sourceforge.net/projects/vcxsrv) in the default "C:/Program Files" location.
+You might need to restart your system afterwards.
 
 ### Usage
 
