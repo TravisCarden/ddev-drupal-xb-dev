@@ -9,16 +9,16 @@
 ## ExecRaw: true
 
 echo Running PHPCS...
-ddev phpcs
+ddev xb-phpcs
 
 echo
 echo Running ESLint...
-ddev eslint
+ddev xb-eslint
 
 echo
 echo Running Stylelint...
-ddev stylelint
+ddev xb-stylelint
 
 echo
 echo Running PHPStan...
-ddev phpstan
+ddev xb-phpstan
